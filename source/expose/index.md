@@ -3,7 +3,7 @@ title: 倒卖曝光墙
 date: 2026-09-16 10:00:00
 updated: 2026-09-16 10:00:00
 type: page
-comments: true
+comments: false
 ---
 
 本站所有汉化作品**永久免费**。如果有人在任何平台售卖本站在免费发布的作品，那就是**倒卖**。

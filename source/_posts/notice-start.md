@@ -6,7 +6,7 @@ categories: [公告]
 tags: []
 cover:
 description: 个人汉化发布站正式开张。这里说明本站做什么、作品怎么获取、更新怎么通知。
-comments: true
+comments: false
 ---
 
 本站开张了。简单说明几件事，**第一次来的朋友看完这一篇就够了**。

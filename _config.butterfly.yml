@@ -23,8 +23,7 @@ menu:
 
 # ---------- 社交图标 ----------
 social:
-  # 邮箱：上线前把 you@example.com 换成你的真实邮箱，然后删掉下面这行开头的 # 即可显示
-  # fas fa-envelope: mailto:you@example.com || 邮箱 || '#4a7dbe'
+  fas fa-envelope: mailto:2499554121@qq.com || 邮箱 || '#4a7dbe'
 
 # ---------- 图标与头像 ----------
 favicon: /img/favicon.svg

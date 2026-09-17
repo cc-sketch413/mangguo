@@ -3,7 +3,7 @@ title: 获取须知
 date: 2026-09-16 10:00:00
 updated: 2026-09-16 10:00:00
 type: page
-comments: true
+comments: false
 ---
 
 第一次来的话花两分钟看完这页，**能省掉九成的重复提问**。
