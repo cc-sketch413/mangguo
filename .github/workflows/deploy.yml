@@ -40,6 +40,20 @@ jobs:
       - name: 构建站点
         run: npm run build
 
+      - name: 修补漏网的绝对路径（inject、菜单、正文链接）
+        run: python 工具/适配子路径.py
+
+      - name: 抽查修补结果
+        run: |
+          echo "--- 应该带 /mangguo/ 前缀的路径 ---"
+          grep -oE '(href|src)="/mangguo/(css|js)/[^"]*"' public/index.html | head -5
+          echo "--- 不应该再出现裸的根路径引用 ---"
+          if grep -qE '(href|src)="/(css|js|img|guide|library)/' public/index.html; then
+            echo "!! 仍有漏网路径"; grep -oE '(href|src)="/[^"]*"' public/index.html | head -10; exit 1
+          else
+            echo "OK 未发现漏网路径"
+          fi
+
       - name: 上传产物
         uses: actions/upload-pages-artifact@v3
         with:
