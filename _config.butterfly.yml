@@ -119,7 +119,7 @@ aside:
   card_announcement:
     enable: true
     content: |
-      <b>解压密码统一是</b><br><code>hxfabuzhan</code><br>转存后再下载，链接更保险。详情见<a href="/guide/">获取须知</a>。
+      <b>解压密码统一是</b><br><code>mangguo</code><br>转存后再下载，链接更保险。详情见<a href="/guide/">获取须知</a>。
   card_recent_post:
     enable: true
     limit: 5
