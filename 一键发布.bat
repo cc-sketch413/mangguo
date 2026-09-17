@@ -2,7 +2,11 @@
 setlocal
 cd /d "%~dp0"
 
-set "PATH=C:\Users\D.Q\.workbuddy\binaries\node\versions\22.22.2-2;%PATH%"
+rem === 工具路径（写死，双击也不依赖系统 PATH）===
+set "NODE_DIR=C:\Users\D.Q\.workbuddy\binaries\node\versions\22.22.2-2"
+set "GIT_DIR=C:\Users\D.Q\.workbuddy\binaries\PortableGit\versions\1.2.0"
+set "PATH=%NODE_DIR%;%GIT_DIR%\mingw64\bin;%GIT_DIR%\usr\bin;%PATH%"
+set "GIT_SSH=%GIT_DIR%\usr\bin\ssh.exe"
 
 echo.
 echo ==================================================
@@ -11,7 +15,7 @@ echo   本地构建 -^> 同步 GitHub -^> 自动构建上线
 echo ==================================================
 echo.
 
-echo === 1/2 本地构建（先验一遍，避免推错东西）===
+echo [1/2] 本地构建（先验一遍，避免推错东西）
 call hexo clean
 if errorlevel 1 goto fail
 call hexo generate
@@ -19,9 +23,22 @@ if errorlevel 1 goto fail
 echo 本地构建通过。
 echo.
 
-echo === 2/2 同步到 GitHub ===
+echo [2/2] 同步到 GitHub
 git add -A
+if errorlevel 1 goto fail
+
+git diff --cached --quiet
+if not errorlevel 1 goto no_change
+
 git commit -m "更新站点内容"
+if errorlevel 1 goto fail
+echo 已提交改动。
+goto do_push
+
+:no_change
+echo 没有检测到新改动，跳过提交。
+
+:do_push
 git push
 if errorlevel 1 goto fail
 
