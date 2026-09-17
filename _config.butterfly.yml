@@ -18,14 +18,9 @@ menu:
   失效反馈: /report/ || fas fa-bug
   曝光墙: /expose/ || fas fa-shield-halved
   关于本站: /about/ || fas fa-user
-  分类: /categories/ || fas fa-folder-open
-  标签: /tags/ || fas fa-tags
-  归档: /archives/ || fas fa-archive
-  订阅: /atom.xml || fas fa-rss
 
 # ---------- 社交图标 ----------
 social:
-  fas fa-rss: /atom.xml || RSS 订阅 || '#f0975a'
   # 邮箱：上线前把 you@example.com 换成你的真实邮箱，然后删掉下面这行开头的 # 即可显示
   # fas fa-envelope: mailto:you@example.com || 邮箱 || '#4a7dbe'
 
@@ -105,14 +100,14 @@ aside:
   mobile: true
   position: right
   display:
-    archive: true
-    tag: true
-    category: true
+    archive: false
+    tag: false
+    category: false
   card_author:
     enable: true
     description: 个人汉化 · 漫画与小说
     button:
-      enable: true
+      enable: false
       icon: fas fa-rss
       text: 订阅更新
       link: /atom.xml
@@ -127,14 +122,14 @@ aside:
   card_newest_comments:
     enable: false
   card_categories:
-    enable: true
+    enable: false
     limit: 8
   card_tags:
-    enable: true
+    enable: false
     limit: 30
     color: true
   card_archives:
-    enable: true
+    enable: false
     type: monthly
     format: YYYY年MM月
     order: -1

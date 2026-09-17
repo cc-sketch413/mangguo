@@ -416,3 +416,9 @@ a:hover { color: var(--hb-primary-d); }
 
 /* 标题更舒展 */
 #site-title, .post-title, h1, h2, h3 { letter-spacing: .01em; }
+
+/* 去掉「文章/标签/分类」站点统计条（作者卡 + 移动端侧边栏） */
+.card-info .site-data,
+#sidebar-menus .site-data {
+  display: none;
+}
