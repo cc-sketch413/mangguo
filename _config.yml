@@ -14,7 +14,7 @@ timezone: 'Asia/Shanghai'
 
 # ---------- 网址 ----------
 # ★ 上线前把 url 改成你自己的域名（影响 RSS、站点地图、分享卡片）
-url: https://mangguo413.netlify.app
+url: https://mangguo413.pages.dev
 root: /
 permalink: :title/                    # 作品页网址：/hoshikuzu-bakery/
                                       # 文件名用英文/拼音，标题用中文，网址才干净

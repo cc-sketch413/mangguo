@@ -13,14 +13,23 @@ Cloudflare Pages 免费版是 **每月 500 次构建、带宽不限**，对个�
 
 ## 二、创建 Pages 项目并连上你的仓库（约 3 分钟）
 
-1. 左侧菜单找到 **Workers & Pages** → 点 **Create** → 选 **Pages** 标签 → **Connect to Git**
+1. 进入目标页面（任选一种）：
+   - **最快**：直接打开 https://dash.cloudflare.com/?to=/:account/workers-and-pages
+   - 左侧菜单在「**计算**」分组下找到「**Workers 和 Pages**」（★ 中文界面是这个名，不叫 "Workers & Pages"）
+   - 或在顶部搜索框（Ctrl + K）里输入 `Pages`，点搜索结果
+2. 点 **创建应用程序**（Create application）→ 切到 **Pages** 标签 → 点 **连接到 Git**（Connect to Git）
+
+> ⚠️ **千万别选成 Workers！**
+> Workers 的域名是 `*.workers.dev`，而 **workers.dev 在国内被 DNS 污染**（实测解析到 Facebook 的 IP，直接连不上），粉丝根本打不开。
+> Pages 的 `*.pages.dev` 国内可以正常访问（已实测）。
+> 如果你已经误建了 Worker，去 Workers 列表里把它删掉即可，不影响后续操作。
 2. 授权 GitHub：点 **Connect GitHub**，在弹出的页面里选择 **Only select repositories**，勾选 `cc-sketch413/mangguo`，然后 **Install & Authorize**
 3. 回到 Cloudflare，选中仓库 `cc-sketch413/mangguo` → **Begin setup**
 4. 填写构建配置（**照抄下面，别改**）：
 
 | 配置项 | 填什么 |
 |---|---|
-| Project name | `mangguo413`（决定网址，会是 mangguo413.pages.dev） |
+| Project name | `mangguo413`（★ 决定网址。注意 `mangguo` 这个名字已被别人占用，别用） |
 | Production branch | `master` |
 | Framework preset | `None`（或 Hexo，都行） |
 | Build command | `npm run build` |
