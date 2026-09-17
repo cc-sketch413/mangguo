@@ -100,7 +100,9 @@ feed:
   content: false
   content_limit: 140
   content_limit_delim: ' '
-  order_by: -date
+  # 按「最后修改时间」排序：编辑保存作品文件后，RSS 立即把它顶到最前并更新
+  # feed 顶层时间戳，粉丝的阅读器就能收到「有更新」提示（与首页/作品库的置顶逻辑一致）
+  order_by: -updated
 
 # 站点地图（利于搜索引擎收录）
 sitemap:

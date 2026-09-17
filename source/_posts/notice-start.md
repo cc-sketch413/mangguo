@@ -1,7 +1,6 @@
 ---
 title: 本站开张：汉化作品发布说明
 date: 2026-09-16 17:00:00
-updated: 2026-09-16 17:00:00
 categories: [公告]
 tags: []
 cover:

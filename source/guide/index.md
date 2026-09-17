@@ -1,7 +1,6 @@
 ---
 title: 获取须知
 date: 2026-09-16 10:00:00
-updated: 2026-09-16 10:00:00
 type: page
 comments: false
 ---
