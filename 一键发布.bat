@@ -4,9 +4,9 @@ cd /d "%~dp0"
 
 rem === 工具路径（写死，双击也不依赖系统 PATH）===
 set "NODE_DIR=C:\Users\D.Q\.workbuddy\binaries\node\versions\22.22.2-2"
-set "GIT_DIR=C:\Users\D.Q\.workbuddy\binaries\PortableGit\versions\1.2.0"
-set "PATH=%NODE_DIR%;%GIT_DIR%\mingw64\bin;%GIT_DIR%\usr\bin;%PATH%"
-set "GIT_SSH=%GIT_DIR%\usr\bin\ssh.exe"
+set "PORTABLE_GIT=C:\Users\D.Q\.workbuddy\binaries\PortableGit\versions\1.2.0"
+set "PATH=%NODE_DIR%;%PORTABLE_GIT%\mingw64\bin;%PORTABLE_GIT%\usr\bin;%PATH%"
+set "GIT_SSH=%PORTABLE_GIT%\usr\bin\ssh.exe"
 
 echo.
 echo ==================================================
