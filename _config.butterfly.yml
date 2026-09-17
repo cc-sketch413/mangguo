@@ -16,6 +16,9 @@ menu:
   作品库:
     最近更新: /library/ || fas fa-clock
     补链合集: /relink/ || fas fa-link
+  日历:
+    新作日历: /calendar-new/ || fas fa-calendar-plus
+    汉化更新日历: /calendar-update/ || fas fa-calendar-check
   获取须知:
     发布站获取须知: /guide/ || fas fa-book-open
     官网漫画购买教程: /tutorial/ || fas fa-cart-shopping
@@ -221,3 +224,4 @@ inject:
   bottom:
     - <script src="/js/hb-download.js"></script>
     - <script src="/js/hb-effects.js"></script>
+    - <script src="/js/hb-calendar.js"></script>

@@ -177,6 +177,40 @@ hexo.extend.tag.register('worklist', function (args) {
   }).join('') + '</div>';
 });
 
+/* ---------- {% calendar new | update %} ----------
+   读 source/_data/calendar.yml，渲染一个日历容器。
+   月历格子、点击弹层由 source/js/hb-calendar.js 在前端生成。 */
+function calDate(d) {
+  if (!d) return '';
+  // YAML 里不加引号的日期会被解析成 Date 对象，统一成 YYYY-MM-DD
+  if (typeof d === 'object' && typeof d.toISOString === 'function') {
+    return d.toISOString().slice(0, 10);
+  }
+  return String(d).trim().slice(0, 10);
+}
+hexo.extend.tag.register('calendar', function (args) {
+  const a = parseArgs(args);
+  const kind = a[0] === 'update' ? 'updates' : 'new_works';
+  const data = hexo.locals.get('data') || {};
+  const cal = data.calendar || {};
+  const raw = Array.isArray(cal[kind]) ? cal[kind] : [];
+  const items = raw
+    .map(it => ({
+      date: calDate(it.date),
+      title: it.title ? String(it.title) : '',
+      platform: it.platform ? String(it.platform) : '',
+      episode: it.episode ? String(it.episode) : '',
+      cover: it.cover ? String(it.cover) : '',
+      link: it.link ? String(it.link) : ''
+    }))
+    .filter(it => it.date && it.title);
+  const json = JSON.stringify(items)
+    .replace(/&/g, '&amp;').replace(/"/g, '&quot;')
+    .replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  const empty = items.length ? '' : '<p class="hb-cal-empty">（还没有数据，先在 source/_data/calendar.yml 里添加条目）</p>';
+  return `<div class="hb-cal" data-kind="${kind}" data-items="${json}"></div>${empty}`;
+});
+
 /* ---------- {% workhead %} —— 作品页顶部的信息条 ---------- */
 hexo.extend.tag.register('workhead', function (args) {
   const a = parseArgs(args);
