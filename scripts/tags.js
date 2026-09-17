@@ -207,7 +207,10 @@ hexo.extend.tag.register('calendar', function (args) {
   const json = JSON.stringify(items)
     .replace(/&/g, '&amp;').replace(/"/g, '&quot;')
     .replace(/</g, '&lt;').replace(/>/g, '&gt;');
-  const empty = items.length ? '' : '<p class="hb-cal-empty">（还没有数据，先在 source/_data/calendar.yml 里添加条目）</p>';
+  const emptyMsg = kind === 'updates'
+    ? '暂无更新记录'
+    : '本月暂无新作记录 —— 新作数据每月更新，以平台实际上架情况为准';
+  const empty = items.length ? '' : `<p class="hb-cal-empty">${emptyMsg}</p>`;
   return `<div class="hb-cal" data-kind="${kind}" data-items="${json}"></div>${empty}`;
 });
 
