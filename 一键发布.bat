@@ -3,35 +3,33 @@ setlocal
 cd /d "%~dp0"
 
 set "PATH=C:\Users\D.Q\.workbuddy\binaries\node\versions\22.22.2-2;%PATH%"
-set "PY=C:\Users\D.Q\.workbuddy\binaries\python\envs\default\Scripts\python.exe"
 
 echo.
 echo ==================================================
-echo   一键发布（本地构建 + 直传，不吃 Netlify 额度）
+echo   一键发布
+echo   本地构建 -^> 同步 GitHub -^> Cloudflare 自动上线
 echo ==================================================
 echo.
 
-echo === 1/3 本地构建站点 ===
+echo === 1/2 本地构建（先验一遍，避免推错东西）===
 call hexo clean
 if errorlevel 1 goto fail
 call hexo generate
 if errorlevel 1 goto fail
-echo 构建完成。
+echo 本地构建通过。
 echo.
 
-echo === 2/3 备份源码到 GitHub ===
+echo === 2/2 同步到 GitHub ===
 git add -A
-git commit -m "更新站点内容" 2>nul
-git push 2>nul
-echo 源码已同步（没改动时会跳过，属正常）。
-echo.
-
-echo === 3/3 上传到 Netlify ===
-"%PY%" "%~dp0工具\立即发布.py"
+git commit -m "更新站点内容"
+git push
 if errorlevel 1 goto fail
 
 echo.
-echo 全部完成，按任意键关闭。
+echo 已推送！Cloudflare 大约 1 分钟内自动构建上线。
+echo 打开 https://mangguo413.pages.dev 看看（旧页面按 Ctrl+F5 强制刷新）。
+echo.
+echo 按任意键关闭。
 pause >nul
 exit /b 0
 
