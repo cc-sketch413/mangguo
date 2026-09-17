@@ -197,6 +197,18 @@ enter_transitions: true
 # ---------- 默认显示模式 ----------
 display_mode: light
 
+# ---------- 图片懒加载 ----------
+lazyload:
+  enable: true
+  native: true
+  field: site
+
+# ---------- 链接预加载（鼠标悬停时后台预加载目标页，点击秒开） ----------
+instantpage: true
+
+# ---------- 回到顶部按钮显示滚动百分比 ----------
+rightside_scroll_percent: true
+
 # ---------- 注入自定义样式 ----------
 inject:
   head:
@@ -205,3 +217,4 @@ inject:
     - <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lxgw-wenkai-webfont@1.7.0/style.css">
   bottom:
     - <script src="/js/hb-download.js"></script>
+    - <script src="/js/hb-effects.js"></script>

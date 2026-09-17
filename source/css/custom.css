@@ -437,3 +437,101 @@ a:hover { color: var(--hb-primary-d); }
 #sidebar-menus .site-data {
   display: none;
 }
+
+/* ============================================================
+   视觉增强（进度条 / 涟漪 / 花瓣 / 问候语 / 导航栏 / 滚动条）
+   ============================================================ */
+
+/* 顶部滚动进度条 */
+#hb-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  width: 0;
+  background: linear-gradient(90deg, #f59e0b, #f6b733, #f0783a);
+  z-index: 1001;
+  box-shadow: 0 0 8px rgba(245, 159, 11, .45);
+  transition: width .08s linear;
+}
+
+/* 鼠标点击涟漪 */
+.hb-ripple {
+  position: fixed;
+  border-radius: 50%;
+  border: 2px solid var(--hb-primary);
+  pointer-events: none;
+  z-index: 9999;
+  animation: hb-ripple .7s ease-out forwards;
+}
+@keyframes hb-ripple {
+  0%   { transform: scale(.3); opacity: .9; }
+  100% { transform: scale(3.2); opacity: 0; }
+}
+
+/* 飘落花瓣（配合 hb-effects.js） */
+.hb-petal {
+  position: fixed;
+  top: -24px;
+  z-index: 2;
+  pointer-events: none;
+  animation-name: hb-fall;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+@keyframes hb-fall {
+  0%   { transform: translateY(-30px) rotate(0deg); }
+  100% { transform: translateY(110vh) rotate(360deg); }
+}
+
+/* 首页按时间问候语 */
+#hb-greeting {
+  font-size: 15px;
+  color: #2f5d8a;
+  letter-spacing: .06em;
+  margin-bottom: 6px;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, .85), 0 0 12px rgba(255, 255, 255, .75);
+  animation: hb-greet-in .8s ease;
+}
+[data-theme="dark"] #hb-greeting {
+  color: #e8f2fb;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, .5);
+}
+@keyframes hb-greet-in {
+  from { opacity: 0; transform: translateY(-8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* 毛玻璃导航栏增强：原 blur 7px 提升到 18px + 暖白底 */
+#page-header.nav-fixed #nav,
+#page-header.fixed #nav {
+  backdrop-filter: blur(18px) saturate(180%);
+  -webkit-backdrop-filter: blur(18px) saturate(180%);
+  background: rgba(255, 250, 243, .74) !important;
+}
+[data-theme="dark"] #page-header.nav-fixed #nav,
+[data-theme="dark"] #page-header.fixed #nav {
+  background: rgba(19, 20, 24, .74) !important;
+}
+
+/* 自定义滚动条（更精致的芒果色圆角） */
+::-webkit-scrollbar { width: 9px; height: 9px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: var(--hb-primary);
+  border-radius: 99px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--hb-primary-d);
+  background-clip: padding-box;
+}
+
+/* 卡片阴影更柔和（覆盖全局浅阴影） */
+.recent-post-item {
+  box-shadow: 0 4px 18px rgba(120, 100, 60, .08) !important;
+}
+.recent-post-item:hover {
+  box-shadow: 0 18px 40px rgba(120, 100, 60, .16) !important;
+}
