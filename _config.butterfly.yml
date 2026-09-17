@@ -20,9 +20,11 @@ menu:
   失效反馈: /report/ || fas fa-bug
   曝光墙: /expose/ || fas fa-shield-halved
   关于本站: /about/ || fas fa-user
+  订阅: /atom.xml || fas fa-rss
 
 # ---------- 社交图标 ----------
 social:
+  fas fa-rss: /atom.xml || RSS 订阅 || '#f0975a'
   fas fa-envelope: mailto:2499554121@qq.com || 邮箱 || '#4a7dbe'
 
 # ---------- 图标与头像 ----------
