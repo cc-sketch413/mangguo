@@ -29,11 +29,12 @@
   function copyText(text, btn) {
     function mark(ok) {
       if (!btn) return;
-      var old = btn.textContent;
-      btn.textContent = ok ? '已复制' : '复制失败';
+      // 用 innerHTML 备份/还原：提取码按钮里带图标，改 textContent 会把图标弄丢
+      var old = btn.innerHTML;
+      btn.innerHTML = ok ? '已复制' : '复制失败';
       btn.classList.toggle('is-ok', !!ok);
       setTimeout(function () {
-        btn.textContent = old;
+        btn.innerHTML = old;
         btn.classList.remove('is-ok');
       }, 1600);
     }
@@ -64,15 +65,23 @@
     if (!url) return;
 
     var name = dl.querySelector('.hb-dl-main b');
-    var note = dl.querySelector('.hb-dl-main i');
+    var noteEl = dl.querySelector('.hb-dl-note');
     var nameHtml = name ? name.textContent : '';
-    var noteHtml = note ? note.textContent : '';
+    // 保留备注的 HTML 结构（含提取码复制按钮），不要取纯文本
+    var noteHtml = noteEl ? noteEl.innerHTML : '';
+    // 容器上带 data-code 时，展开后重建提取码按钮（防止某些情况下备注被清掉）
+    var code = dl.getAttribute('data-code') || '';
+    if (code && noteHtml.indexOf('hb-dl-code') < 0) {
+      noteHtml = '提取码：<button class="hb-dl-code" type="button" data-code="' +
+        escapeHtml(code) + '" title="点击复制提取码"><span>' + escapeHtml(code) +
+        '</span></button>';
+    }
 
     dl.classList.add('hb-dl-open');
     dl.innerHTML =
       '<span class="hb-dl-ico">' + '<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11m0 0 4-4m-4 4-4-4M5 19h14"/></svg>' + '</span>' +
       '<span class="hb-dl-main"><b>' + escapeHtml(nameHtml) + '</b>' +
-      (noteHtml ? '<i>' + escapeHtml(noteHtml) + '</i>' : '') +
+      (noteHtml ? '<i class="hb-dl-note">' + noteHtml + '</i>' : '') +
       '<span class="hb-dl-url">' + escapeHtml(url) + '</span></span>' +
       '<span class="hb-dl-actions">' +
       '<button class="hb-dl-copy" type="button" data-url="' + escapeHtml(url) + '">复制链接</button>' +
@@ -90,6 +99,12 @@
     var copy = e.target.closest('.hb-dl-copy');
     if (copy) {
       copyText(copy.getAttribute('data-url') || '', copy);
+      return;
+    }
+    // 提取码：直接点码就复制，不需要先展开链接
+    var codeBtn = e.target.closest('.hb-dl-code');
+    if (codeBtn) {
+      copyText(codeBtn.getAttribute('data-code') || '', codeBtn);
     }
   });
 })();

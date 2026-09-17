@@ -30,6 +30,7 @@ const esc = s => String(s == null ? '' : s)
 
 const ICON_DL = '<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11m0 0 4-4m-4 4-4-4M5 19h14"/></svg>';
 const ICON_ARROW = '<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>';
+const ICON_COPY = '<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>';
 
 /* ---------- 封面：没有图就用标题 hash 生成渐变封面 ---------- */
 const PALETTES = [
@@ -56,6 +57,21 @@ const STATUS = {
   hiatus: '暂停中', planned: '预告'
 };
 
+/* ---------- 备注 → 提取码一键复制 ---------- */
+/* 备注形如「提取码：abcd」时，把码本身渲染成可点击复制的按钮；
+   其他备注（如「无需提取码」）原样显示 */
+function noteHTML(note) {
+  if (!note) return '';
+  const m = String(note).match(/^(.*?提取码\s*[:：]\s*)([A-Za-z0-9]{2,16})(.*)$/);
+  if (!m) return `<i class="hb-dl-note">${esc(note)}</i>`;
+  const pre = m[1], code = m[2], post = m[3];
+  return `<i class="hb-dl-note">${esc(pre)}`
+    + `<button class="hb-dl-code" type="button" data-code="${esc(code)}" title="点击复制提取码">`
+    + `<span>${esc(code)}</span>${ICON_COPY}</button>`
+    + (post ? esc(post) : '')
+    + '</i>';
+}
+
 /* ---------- {% dl %} ---------- */
 /* 链接用 base64 存进 data-url，前端点击后才解码显示，避免爬虫/采集直接抓走明文链接 */
 hexo.extend.tag.register('dl', function (args) {
@@ -65,9 +81,12 @@ hexo.extend.tag.register('dl', function (args) {
     return '<p style="color:#e6a23c">⚠ dl 标签参数不足，正确写法：<code>{% dl 名称 || 链接 || 备注 %}</code></p>';
   }
   const b64 = Buffer.from(url, 'utf8').toString('base64');
-  return `<div class="hb-dl" data-url="${b64}">`
+  // 把提取码提取出来挂到容器上，展开链接后仍能一键复制
+  const codeM = note ? String(note).match(/提取码\s*[:：]\s*([A-Za-z0-9]{2,16})/) : null;
+  const codeAttr = codeM ? ` data-code="${esc(codeM[1])}"` : '';
+  return `<div class="hb-dl" data-url="${b64}"${codeAttr}>`
     + `<span class="hb-dl-ico">${ICON_DL}</span>`
-    + `<span class="hb-dl-main"><b>${esc(name)}</b>${note ? `<i>${esc(note)}</i>` : ''}</span>`
+    + `<span class="hb-dl-main"><b>${esc(name)}</b>${noteHTML(note)}</span>`
     + `<button class="hb-dl-show" type="button">显示链接</button>`
     + `<span class="hb-dl-arrow">${ICON_ARROW}</span>`
     + '</div>';
