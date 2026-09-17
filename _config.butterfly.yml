@@ -16,7 +16,9 @@ menu:
   作品库:
     最近更新: /library/ || fas fa-clock
     补链合集: /relink/ || fas fa-link
-  获取须知: /guide/ || fas fa-circle-question
+  获取须知:
+    发布站获取须知: /guide/ || fas fa-book-open
+    官网漫画购买教程: /tutorial/ || fas fa-cart-shopping
   失效反馈: /report/ || fas fa-bug
   曝光墙: /expose/ || fas fa-shield-halved
   关于本站: /about/ || fas fa-user
