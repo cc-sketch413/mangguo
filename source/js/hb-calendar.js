@@ -23,6 +23,7 @@
 
   /* ---------- 弹层 ---------- */
   function openPanel(date, list, kind) {
+    var isUpdate = kind === 'updates';
     var wrap = document.createElement('div');
     wrap.className = 'hb-cal-pop';
 
@@ -30,7 +31,7 @@
       var cover = it.cover
         ? '<img src="' + esc(it.cover) + '" alt="' + esc(it.title) + '" loading="lazy">'
         : '<span class="hb-cal-ph">' + esc(String(it.title).slice(0, 1)) + '</span>';
-      var meta = kind === 'update'
+      var meta = isUpdate
         ? (it.episode ? '<i>更新至 ' + esc(it.episode) + '</i>' : '<i>已更新</i>')
         : (it.platform ? '<i>' + esc(it.platform) + '</i>' : '');
       var btn = it.link
@@ -46,7 +47,7 @@
       '<div class="hb-cal-mask"></div>'
       + '<div class="hb-cal-box" role="dialog" aria-modal="true">'
       + '<button class="hb-cal-close" type="button" aria-label="关闭">&times;</button>'
-      + '<div class="hb-cal-boxhd">' + esc(date.replace(/-/g, '.')) + (kind === 'update' ? ' 更新' : ' 新作') + '</div>'
+      + '<div class="hb-cal-boxhd">' + esc(date.replace(/-/g, '.')) + (isUpdate ? ' 更新' : ' 新作') + '</div>'
       + '<div class="hb-cal-cards">' + cards + '</div>'
       + '</div>';
 
@@ -94,7 +95,7 @@
       + '<div class="hb-cal-week">' + WEEK.map(function (w) { return '<span>' + w + '</span>'; }).join('') + '</div>'
       + '<div class="hb-cal-grid"></div>'
       + '<div class="hb-cal-legend">'
-      + (kind === 'update' ? '有更新的日期会亮起，点一下看当天更新了什么' : '有新作的日期会亮起，点一下看是哪些作品')
+      + (kind === 'updates' ? '有更新的日期会亮起，点一下看当天更新了什么' : '有新作的日期会亮起，点一下看是哪些作品')
       + '</div>';
 
     var titleEl = host.querySelector('.hb-cal-title');
