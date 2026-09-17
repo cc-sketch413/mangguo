@@ -22,6 +22,21 @@ body {
     "KaiTi", "楷体", sans-serif;
 }
 
+/* ---------------- 蓝天插画背景上的标题可读性 ---------------- */
+/* 顶部横幅与网站背景均为浅色蓝天插画，标题从白色改为深蓝，加白色光晕 */
+#site-info #site-title,
+#site-info #site-subtitle,
+#page-site-info #site-title {
+  color: #2f5d8a;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, .85), 0 0 16px rgba(255, 255, 255, .75);
+}
+[data-theme="dark"] #site-info #site-title,
+[data-theme="dark"] #site-info #site-subtitle,
+[data-theme="dark"] #page-site-info #site-title {
+  color: #e8f2fb;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, .5);
+}
+
 /* butterfly 主色跟随 */
 :root {
   --btn-bg: var(--hb-primary);

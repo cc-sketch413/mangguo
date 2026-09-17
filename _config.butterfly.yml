@@ -28,14 +28,17 @@ social:
 # ---------- 图标与头像 ----------
 favicon: /img/favicon.svg
 
+# ---------- 网站背景（AI 生成插画）----------
+background: /img/bg-sky.jpg
+
 avatar:
   img: /img/avatar.png
   effect: false
 
 # ---------- 顶部横幅图 ----------
 disable_top_img: false
-default_top_img:
-index_img: /img/banner.svg
+default_top_img: /img/bg-sky.jpg
+index_img: /img/bg-sky.jpg
 archive_img:
 tag_img:
 category_img:
