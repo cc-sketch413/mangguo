@@ -9,10 +9,10 @@ cover: /img/cover/yongshi-chuanqi.jpg
 description: 魔王、最强魔法师与勇者交织的奇幻故事。韩文原作个人汉化。
 work_status: ongoing        # ongoing 连载中 / completed 已完结 / hiatus 暂停 / planned 预告
 work_original: 용사 이야기 (HERO STORY)
-work_episodes: 汉化中
+work_episodes: 外传5 已发布
 ---
 
-{% workhead 漫画 || 连载中 || 용그럴 앤 || 汉化准备中 %}
+{% workhead 漫画 || 连载中 || 용그럴 앤 || 外传5 已发布 %}
 
 ## 作品简介
 
@@ -30,22 +30,18 @@ work_episodes: 汉化中
 
 ## 下载
 
-{% dlbox 最新话 %}
+{% dlbox 最新话（外传5） %}
 {% dl UC || https://drive.uc.cn/s/896d81a58dfc4 || 提取码：wEzC %}
 {% enddlbox %}
 
-{% dlbox 最新话 %}
-{% dl 百度网盘 || https://pan.baidu.com/s/1ODakqOXtCfDv3lVU_Dnpow || 提取码：sz8e  %}
+{% dlbox 漫画总链接 %}
+{% dl 百度网盘 || https://pan.baidu.com/s/1ODakqOXtCfDv3lVU_Dnpow || 提取码：sz8e %}
 {% enddlbox %}
-
-{% tip warn %}
-上面的下载链接还是占位符，等你把网盘链接发我之后替换掉，才会正式发布。
-{% endtip %}
 
 ## 更新记录
 
 - 2026-09-17 外传5更新
-- 2026-09-17 作品页创建，等待网盘链接
+- 2026-09-17 作品页上线
 
 <!--
   更新方法：
