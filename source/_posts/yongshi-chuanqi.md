@@ -12,7 +12,7 @@ work_original: 용사 이야기 (HERO STORY)
 work_episodes: 外传5 已发布
 ---
 
-{% workhead 漫画 || 连载中 || 용그럴 앤 || 外传5 已发布 %}
+{% workhead 漫画 || 连载中 || 언니 || 外传5 已发布 %}
 
 ## 作品简介
 
