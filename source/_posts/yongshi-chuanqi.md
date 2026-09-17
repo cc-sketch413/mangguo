@@ -32,9 +32,6 @@ work_episodes: 外传5 已发布
 
 {% dlbox 最新话（外传5） %}
 {% dl UC || https://drive.uc.cn/s/896d81a58dfc4 || 提取码：wEzC %}
-{% enddlbox %}
-
-{% dlbox 漫画总链接 %}
 {% dl 百度网盘 || https://pan.baidu.com/s/1ODakqOXtCfDv3lVU_Dnpow || 提取码：sz8e %}
 {% enddlbox %}
 
