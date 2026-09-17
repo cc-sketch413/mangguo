@@ -13,7 +13,9 @@ nav:
 # ---------- 菜单 ----------
 menu:
   首页: / || fas fa-home
-  作品库: /library/ || fas fa-book-open
+  作品库:
+    最近更新: /library/ || fas fa-clock
+    补链合集: /relink/ || fas fa-link
   获取须知: /guide/ || fas fa-circle-question
   失效反馈: /report/ || fas fa-bug
   曝光墙: /expose/ || fas fa-shield-halved
