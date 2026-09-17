@@ -1,0 +1,208 @@
+# ============================================================
+#  Butterfly 主题配置 —— 汉化发布站
+#  ★ 站名/署名在 _config.yml 改，这里管外观和功能
+# ============================================================
+
+# ---------- 导航栏 ----------
+nav:
+  logo: /img/favicon.svg
+  display_title: true
+  display_post_title: true
+  fixed: true
+
+# ---------- 菜单 ----------
+menu:
+  首页: / || fas fa-home
+  作品库: /library/ || fas fa-book-open
+  获取须知: /guide/ || fas fa-circle-question
+  失效反馈: /report/ || fas fa-bug
+  曝光墙: /expose/ || fas fa-shield-halved
+  关于本站: /about/ || fas fa-user
+  分类: /categories/ || fas fa-folder-open
+  标签: /tags/ || fas fa-tags
+  归档: /archives/ || fas fa-archive
+  订阅: /atom.xml || fas fa-rss
+
+# ---------- 社交图标 ----------
+social:
+  fas fa-rss: /atom.xml || RSS 订阅 || '#f0975a'
+  # 邮箱：上线前把 you@example.com 换成你的真实邮箱，然后删掉下面这行开头的 # 即可显示
+  # fas fa-envelope: mailto:you@example.com || 邮箱 || '#4a7dbe'
+
+# ---------- 图标与头像 ----------
+favicon: /img/favicon.svg
+
+avatar:
+  img: /img/avatar.png
+  effect: false
+
+# ---------- 顶部横幅图 ----------
+disable_top_img: false
+default_top_img:
+index_img: /img/banner.svg
+archive_img:
+tag_img:
+category_img:
+
+# ---------- 封面（作品卡片用） ----------
+cover:
+  index_enable: true
+  aside_enable: true
+  archives_enable: true
+  default_cover:
+    - /img/cover-default.svg
+
+# ---------- 首页副标题（打字机效果） ----------
+subtitle:
+  enable: true
+  effect: true
+  source: false
+  sub:
+    - 个人汉化 · 漫画与小说
+    - 全部免费发布，不设任何收费
+    - 新作请看「公告」，或订阅 RSS
+
+# ---------- 首页文章布局 ----------
+# 4: 封面上、信息下，卡片式，最贴合"作品墙"
+index_layout: 4
+
+# 首页文章简介：优先显示 front-matter 的 description
+index_post_content:
+  method: 2
+  length: 300
+
+# ---------- 文章元信息 ----------
+post_meta:
+  page:
+    date_type: created
+    date_format: date
+    categories: true
+    tags: false
+    label: true
+  post:
+    position: left
+    date_type: both
+    date_format: date
+    categories: true
+    tags: true
+    label: true
+
+# ---------- 页脚 ----------
+footer:
+  owner:
+    enable: true
+    since: 2026
+  copyright:
+    enable: true
+    version: false
+  custom_text: 本站汉化作品仅供个人学习交流，请支持原作者与正版。
+
+# ---------- 侧边栏 ----------
+aside:
+  enable: true
+  hide: false
+  button: true
+  mobile: true
+  position: right
+  display:
+    archive: true
+    tag: true
+    category: true
+  card_author:
+    enable: true
+    description: 个人汉化 · 漫画与小说
+    button:
+      enable: true
+      icon: fas fa-rss
+      text: 订阅更新
+      link: /atom.xml
+  card_announcement:
+    enable: true
+    content: |
+      <b>解压密码统一是</b><br><code>hxfabuzhan</code><br>转存后再下载，链接更保险。详情见<a href="/guide/">获取须知</a>。
+  card_recent_post:
+    enable: true
+    limit: 5
+    sort: updated
+  card_newest_comments:
+    enable: false
+  card_categories:
+    enable: true
+    limit: 8
+  card_tags:
+    enable: true
+    limit: 30
+    color: true
+  card_archives:
+    enable: true
+    type: monthly
+    format: YYYY年MM月
+    order: -1
+    limit: 8
+  card_webinfo:
+    enable: true
+    post_count: true
+    last_push_date: true
+    runtime_date: 2026/09/16
+
+# ---------- 暗色模式 ----------
+darkmode:
+  enable: true
+  button: true
+  autoChangeMode: false
+
+# ---------- 站内搜索 ----------
+search:
+  use: local_search
+  placeholder: 搜索作品名 / 原名 / 标签…
+  local_search:
+    preload: true
+    top_n_per_article: 1
+    unescape: true
+    CDN:
+
+# ---------- 评论（Twikoo，需自行填 envId） ----------
+# 开通方式见《使用说明》：先部署 Twikoo 拿到 envId，填进下面
+twikoo:
+  envId:
+  region:
+  visitor: false
+
+# ---------- 主题色（芒果暖橙系） ----------
+theme_color:
+  enable: true
+  main: "#f59e0b"
+  paginator: "#f59e0b"
+  button_hover: "#d97706"
+  text_selection: "#f59e0b"
+  link_color: "#c8730a"
+  meta_color: "#9b8a77"
+  hr_color: "#f5cf8f"
+  code_foreground: "#e0644a"
+  code_background: "rgba(245, 159, 11, .08)"
+  toc_color: "#f59e0b"
+  blockquote_padding_color: "#f59e0b"
+  blockquote_background_color: "rgba(245, 159, 11, .10)"
+  scrollbar_color: "#f59e0b"
+  meta_theme_color_light: "#fffaf3"
+  meta_theme_color_dark: "#0d0d0d"
+
+# ---------- 加载动画 ----------
+preloader:
+  enable: true
+  source: 1
+
+# ---------- 页面切换过渡 ----------
+enter_transitions: true
+
+# ---------- 默认显示模式 ----------
+display_mode: light
+
+# ---------- 注入自定义样式 ----------
+inject:
+  head:
+    - <link rel="stylesheet" href="/css/custom.css">
+    # 霞鹜文楷（书卷气字体），加载失败自动回退系统字体
+    - <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lxgw-wenkai-webfont@1.7.0/style.css">
+  bottom:
+    - <script src="/js/hb-download.js"></script>

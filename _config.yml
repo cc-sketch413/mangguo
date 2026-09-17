@@ -1,0 +1,117 @@
+# ============================================================
+#  Hexo 站点配置 —— 汉化发布站
+#  ★ 站名、署名、网址改这里
+# ============================================================
+
+# ---------- 站点 ----------
+title: 芒果的发布站                      # ★ 站名
+subtitle: '个人汉化 · 漫画与小说'       # 副标题
+description: '个人汉化作品发布'
+keywords: 汉化,漫画汉化,小说汉化,乙女向,
+author: 一个芒果OVO                       # ★ 你的笔名 / ID
+language: zh-CN
+timezone: 'Asia/Shanghai'
+
+# ---------- 网址 ----------
+# ★ 上线前把 url 改成你自己的域名（影响 RSS、站点地图、分享卡片）
+url: https://mangguo413.com
+root: /
+permalink: :title/                    # 作品页网址：/hoshikuzu-bakery/
+                                      # 文件名用英文/拼音，标题用中文，网址才干净
+permalink_defaults:
+pretty_urls:
+  trailing_index: false                # 去掉网址末尾的 index.html
+  trailing_html: false
+
+# ---------- 目录 ----------
+source_dir: source
+public_dir: public
+tag_dir: tags
+archive_dir: archives
+category_dir: categories
+code_dir: downloads/code
+i18n_dir: :lang
+skip_render:
+
+# ---------- 写作 ----------
+new_post_name: :title.md
+default_layout: post
+titlecase: false
+external_link:
+  enable: true
+  field: site                          # 站外链接新窗口打开
+  exclude:
+filename_case: 0
+render_drafts: false
+post_asset_folder: false
+relative_link: false
+future: true
+syntax_highlighter: highlight.js
+highlight:
+  line_number: true
+  auto_detect: false
+  tab_replace: ''
+  wrap: true
+  hljs: false
+
+# ---------- 首页 ----------
+index_generator:
+  path: ''
+  per_page: 10
+  order_by: -updated                   # 首页按"最近更新"排序（作品一更新就顶上来）
+
+default_category: 未分类
+category_map:
+  漫画: manga
+  小说: novel
+  公告: notice
+tag_map:
+
+# ---------- 日期格式 ----------
+date_format: YYYY-MM-DD
+time_format: HH:mm
+updated_option: 'mtime'
+
+# ---------- 分页 ----------
+per_page: 10
+pagination_dir: page
+
+include:
+exclude:
+ignore:
+
+# ---------- 主题 ----------
+theme: butterfly
+
+# ---------- 插件 ----------
+# 站内搜索（配合 butterfly 的 local_search）
+search:
+  path: search.xml
+  field: post
+  content: true
+  format: html
+
+# RSS 订阅 —— 粉丝订阅更新就靠它
+feed:
+  type: atom
+  path: atom.xml
+  limit: 20
+  hub:
+  content: false
+  content_limit: 140
+  content_limit_delim: ' '
+  order_by: -date
+
+# 站点地图（利于搜索引擎收录）
+sitemap:
+  path: sitemap.xml
+  rel: false
+  tags: true
+  categories: true
+
+# ---------- 部署 ----------
+# ★ 上线时按平台填，详见《使用说明》
+#   Netlify / Vercel：不用填，直接把 public 文件夹拖进去
+#   GitHub Pages:    type: git   repo: https://github.com/你的用户名/仓库名.git   branch: main
+deploy:
+  type: ''

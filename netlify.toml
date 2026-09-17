@@ -1,0 +1,8 @@
+# Netlify 构建配置
+# Netlify 会自动 npm install（检测到 package.json），然后执行下面的命令构建
+[build]
+  command = "npm run build"     # 相当于 hexo generate，产出 public/
+  publish = "public"            # 部署 public 目录里的静态文件
+
+[build.environment]
+  NODE_VERSION = "20"           # 固定 Node 版本，避免云端默认版本不兼容 Hexo 8
