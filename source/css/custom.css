@@ -116,8 +116,8 @@ body {
   opacity: .9;
   margin-top: 1px;
 }
-/* 提取码：点击即复制 */
-.hb-dl-code {
+/* 提取码 / 通用内容：点击即复制 */
+.hb-dl-code, .hb-copy {
   display: inline-flex;
   align-items: center;
   gap: 4px;
@@ -135,8 +135,8 @@ body {
   cursor: pointer;
   transition: all .18s ease;
 }
-.hb-dl-code:hover { background: var(--hb-primary); border-style: solid; color: #fff; }
-.hb-dl-code.is-ok { background: #4caf7d; border-color: #4caf7d; border-style: solid; color: #fff; }
+.hb-dl-code:hover, .hb-copy:hover { background: var(--hb-primary); border-style: solid; color: #fff; }
+.hb-dl-code.is-ok, .hb-copy.is-ok { background: #4caf7d; border-color: #4caf7d; border-style: solid; color: #fff; }
 .hb-dl-arrow { flex: 0 0 auto; color: var(--hb-primary); opacity: .6; transition: all .22s ease; }
 .hb-dl:hover .hb-dl-arrow { opacity: 1; transform: translateX(3px); }
 

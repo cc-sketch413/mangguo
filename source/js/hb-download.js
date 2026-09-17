@@ -101,8 +101,8 @@
       copyText(copy.getAttribute('data-url') || '', copy);
       return;
     }
-    // 提取码：直接点码就复制，不需要先展开链接
-    var codeBtn = e.target.closest('.hb-dl-code');
+    // 提取码 / 通用复制按钮：直接点就复制，不需要先展开链接
+    var codeBtn = e.target.closest('.hb-dl-code, .hb-copy');
     if (codeBtn) {
       copyText(codeBtn.getAttribute('data-code') || '', codeBtn);
     }

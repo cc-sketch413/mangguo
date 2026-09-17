@@ -107,6 +107,19 @@ hexo.extend.tag.register('tip', function (args, content) {
   return `<div class="hb-tip hb-tip-${esc(kind)}">${content}</div>`;
 }, { ends: true });
 
+/* ---------- {% copy 值 || 显示文本 %} ----------
+   任意内容一键复制（解压密码、账号、命令等）。
+   例：{% copy mangguo %}            → 按钮显示 mangguo
+       {% copy hxfabuzhan || 密码 %} → 按钮显示「密码」，复制的是 hxfabuzhan */
+hexo.extend.tag.register('copy', function (args) {
+  const a = parseArgs(args);
+  const val = a[0];
+  if (!val) return '<span style="color:#e6a23c">⚠ copy 标签需要内容：<code>{% copy 要复制的内容 %}</code></span>';
+  const label = a[1] || val;
+  return `<button class="hb-copy" type="button" data-code="${esc(val)}" title="点击复制">`
+    + `<span>${esc(label)}</span>${ICON_COPY}</button>`;
+});
+
 /* ---------- {% progress 已发布 || 总话数 %} ---------- */
 hexo.extend.tag.register('progress', function (args) {
   const a = parseArgs(args);
