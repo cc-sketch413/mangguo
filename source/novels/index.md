@@ -5,8 +5,6 @@ comments: false
 description: 本站汉化小说下载区，全部免费发布。输入密码即可直接下载 TXT / EPUB，不用转网盘。
 ---
 
-{% agegate 本页内容仅限 18 岁以上观看 %}
-
 本站汉化小说的下载区。**输入密码即可直接下载 TXT / EPUB**，不用转网盘。
 
 {% tip info %}
