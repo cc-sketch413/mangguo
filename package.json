@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "prebuild": "python 工具/mtime_sync.py",
+    "prebuild": "python 工具/应用设置.py && python 工具/mtime_sync.py",
     "build": "hexo clean && hexo generate",
     "clean": "hexo clean",
     "deploy": "hexo deploy",

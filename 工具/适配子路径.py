@@ -19,8 +19,23 @@ import pathlib
 import re
 import sys
 
-ROOT = '/mangguo'                      # GitHub Pages 项目站点的子路径
+def read_root():
+    """子路径从 _config.yml 的 root 读 —— 换仓库名 / 换域名都不用改本文件"""
+    cfg = pathlib.Path('_config.yml')
+    if cfg.is_file():
+        for line in cfg.read_text(encoding='utf-8').splitlines():
+            m = re.match(r'^root:\s*(.+?)\s*$', line)
+            if m:
+                return m.group(1).strip().strip('"').strip("'")
+    return '/'
+
+
+ROOT = read_root().rstrip('/')         # 如 /mangguo；根路径部署时是空串
 PREFIX = ROOT.strip('/')               # mangguo
+
+if not ROOT:
+    print('[SKIP] _config.yml 的 root 是根路径，不需要子路径适配')
+    sys.exit(0)
 
 BASE = pathlib.Path('public')
 if not BASE.is_dir():

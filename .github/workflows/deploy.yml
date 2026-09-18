@@ -39,10 +39,24 @@ jobs:
       - name: 安装依赖
         run: npm ci || npm install
 
+      - name: 检查 GitHub Pages 是否已启用
+        run: |
+          # 首次部署前必须人工开启一次 Pages：创建 Pages 站点属于「仓库管理操作」，
+          # 自动令牌(GITHUB_TOKEN)按设计没有这个权限，所以无法自动化。
+          if ! curl -sf -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+                "https://api.github.com/repos/${{ github.repository }}/pages" > /dev/null; then
+            echo "::error title=GitHub Pages 还没启用::请打开 https://github.com/${{ github.repository }}/settings/pages ，把「Build and deployment」的 Source 选成「GitHub Actions」，保存后回到 Actions 页重新运行本工作流。"
+            exit 1
+          fi
+          echo "Pages 已启用 ✓"
+
       - name: 适配 GitHub Pages 子路径
         run: |
-          sed -i 's|^url:.*|url: https://cc-sketch413.github.io|' _config.yml
-          sed -i 's|^root:.*|root: /mangguo/|' _config.yml
+          # 用户名 / 仓库名从 Actions 上下文自动获取，换仓库、换人用都不用改任何文件
+          OWNER="${GITHUB_REPOSITORY%%/*}"
+          REPO="${GITHUB_REPOSITORY##*/}"
+          sed -i "s|^url:.*|url: https://${OWNER}.github.io|" _config.yml
+          sed -i "s|^root:.*|root: /${REPO}/|" _config.yml
           echo "--- 构建配置 ---"
           grep -E '^(url|root):' _config.yml
 
@@ -54,8 +68,9 @@ jobs:
 
       - name: 抽查修补结果
         run: |
-          echo "--- 应该带 /mangguo/ 前缀的路径 ---"
-          grep -oE '(href|src)="/mangguo/(css|js)/[^"]*"' public/index.html | head -5
+          REPO="${GITHUB_REPOSITORY##*/}"
+          echo "--- 应该带 /${REPO}/ 前缀的路径 ---"
+          grep -oE "(href|src)=\"/${REPO}/(css|js)/[^\"]*\"" public/index.html | head -5
           echo "--- 不应该再出现裸的根路径引用 ---"
           if grep -qE '(href|src)="/(css|js|img|guide|library)/' public/index.html; then
             echo "!! 仍有漏网路径"; grep -oE '(href|src)="/[^"]*"' public/index.html | head -10; exit 1
