@@ -693,3 +693,114 @@ a:hover { color: var(--hb-primary-d); }
   .hb-novel-cover { flex: 0 0 84px; width: 84px; }
   .hb-novel { gap: 11px; padding: 12px; }
 }
+
+/* ---------------- 18+ 年龄确认门 ---------------- */
+html.hb-age-lock, html.hb-age-lock body { overflow: hidden !important; }
+
+.hb-age {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(10, 12, 18, .84);
+  -webkit-backdrop-filter: blur(9px);
+  backdrop-filter: blur(9px);
+}
+.hb-age[hidden] { display: none; }
+
+.hb-age-box {
+  width: 100%;
+  max-width: 430px;
+  padding: 30px 26px 26px;
+  border-radius: 18px;
+  background: var(--card-bg, #fff);
+  color: var(--font-color, #1e2a32);
+  box-shadow: 0 30px 70px rgba(0, 0, 0, .45);
+  text-align: center;
+  animation: hbAgeIn .3s ease;
+}
+.hb-age-box[hidden] { display: none; }
+@keyframes hbAgeIn {
+  from { opacity: 0; transform: translateY(16px) scale(.97); }
+  to   { opacity: 1; transform: none; }
+}
+.hb-age-badge {
+  display: inline-block;
+  padding: 3px 12px;
+  border-radius: 999px;
+  background: #e05c5c;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: .08em;
+}
+.hb-age-title { margin: 14px 0 10px; font-size: 19px; font-weight: 700; line-height: 1.45; }
+.hb-age-desc { margin: 0; font-size: 13px; line-height: 1.8; opacity: .68; }
+.hb-age-q { margin: 20px 0 0; font-size: 15.5px; font-weight: 600; }
+.hb-age-btns { display: flex; gap: 10px; margin-top: 20px; }
+.hb-age-btn {
+  flex: 1;
+  padding: 11px 14px;
+  border-radius: 11px;
+  border: 1px solid transparent;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all .2s ease;
+}
+.hb-age-yes { background: var(--hb-primary); color: #fff; }
+.hb-age-yes:hover { background: var(--hb-primary-d); }
+.hb-age-no { background: transparent; border-color: rgba(128, 128, 128, .38); color: inherit; opacity: .8; }
+.hb-age-no:hover { border-color: #e05c5c; color: #e05c5c; opacity: 1; }
+
+/* 满屏「请成年后再来」 */
+.hb-age-deny {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: #101219;
+}
+.hb-age-deny[hidden] { display: none; }
+.hb-age-deny-bg {
+  position: absolute;
+  inset: -15%;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: center;
+  justify-content: center;
+  gap: 8px 18px;
+  font-size: 23px;
+  font-weight: 800;
+  line-height: 1.25;
+  color: rgba(224, 92, 92, .16);
+  white-space: nowrap;
+  user-select: none;
+  pointer-events: none;
+  transform: rotate(-12deg);
+  animation: hbAgeDrift 26s linear infinite;
+}
+@keyframes hbAgeDrift {
+  from { transform: rotate(-12deg) translateY(0); }
+  to   { transform: rotate(-12deg) translateY(-60px); }
+}
+.hb-age-deny-main { position: relative; text-align: center; padding: 24px; }
+.hb-age-deny-main h2 {
+  margin: 0;
+  font-size: clamp(32px, 8.5vw, 62px);
+  font-weight: 900;
+  color: #fff;
+  letter-spacing: .06em;
+  text-shadow: 0 6px 34px rgba(224, 92, 92, .6);
+}
+.hb-age-deny-main p { margin: 16px 0 0; font-size: 14px; color: rgba(255, 255, 255, .55); }
+
+@media (prefers-reduced-motion: reduce) {
+  .hb-age-deny-bg { animation: none; }
+  .hb-age-box { animation: none; }
+}

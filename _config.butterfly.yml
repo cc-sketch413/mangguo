@@ -223,3 +223,4 @@ inject:
     - <script src="/js/hb-download.js"></script>
     - <script src="/js/hb-effects.js"></script>
     - <script src="/js/hb-novel.js"></script>
+    - <script src="/js/hb-agegate.js"></script>

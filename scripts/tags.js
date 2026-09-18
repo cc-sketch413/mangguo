@@ -263,3 +263,42 @@ hexo.extend.tag.register('novels', function () {
       + '</div></div>';
   }).join('') + '</div>';
 });
+
+/* ---------- {% agegate 标题 %} —— 18+ 年龄确认门 ----------
+   两层确认：① 是否已满 18 岁 → ② 你确定你成年了吗？
+   任一步选「否」→ 满屏「请成年后再来」。
+   遮罩默认就是显示的（HTML 不带 hidden），这样即使 JS 没跑起来也照样挡住内容。
+   验证状态记在 sessionStorage（同一次浏览不再重复问，关掉浏览器重新问）。
+*/
+hexo.extend.tag.register('agegate', function (args) {
+  const a = parseArgs(args);
+  const title = a[0] || '本页内容仅限 18 岁以上观看';
+  return `<div class="hb-age" id="hb-age">
+  <div class="hb-age-box" data-step="1">
+    <span class="hb-age-badge">18+</span>
+    <h3 class="hb-age-title">${esc(title)}</h3>
+    <p class="hb-age-desc">本页包含成人向内容，仅限年满 18 周岁者浏览。<br>请确认您已成年，并自愿浏览本页内容。</p>
+    <p class="hb-age-q">您是否已经年满 18 岁？</p>
+    <div class="hb-age-btns">
+      <button type="button" class="hb-age-btn hb-age-yes" data-act="confirm1">是</button>
+      <button type="button" class="hb-age-btn hb-age-no" data-act="deny">否</button>
+    </div>
+  </div>
+  <div class="hb-age-box" data-step="2" hidden>
+    <span class="hb-age-badge">18+</span>
+    <h3 class="hb-age-title">你确定你成年了吗？</h3>
+    <p class="hb-age-desc">请再次确认。进入后请自行承担浏览成人内容的相关责任，<br>并遵守你所在地区的法律法规。</p>
+    <div class="hb-age-btns">
+      <button type="button" class="hb-age-btn hb-age-yes" data-act="confirm2">是</button>
+      <button type="button" class="hb-age-btn hb-age-no" data-act="deny">否</button>
+    </div>
+  </div>
+  <div class="hb-age-deny" hidden>
+    <div class="hb-age-deny-bg" aria-hidden="true"></div>
+    <div class="hb-age-deny-main">
+      <h2>请成年后再来</h2>
+      <p>本页内容仅限年满 18 周岁者浏览。</p>
+    </div>
+  </div>
+</div>`;
+});
