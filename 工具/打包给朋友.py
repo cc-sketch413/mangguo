@@ -33,7 +33,8 @@ TOP = '汉化发布站'                      # 包内顶层文件夹名
 
 # 单份文件（站点根下的文档与配置）
 FILES = [
-    '从这里开始.md', '朋友部署指南.md', '使用说明.md', '如何发布作品.md',
+    '从这里开始.md', '文件夹放什么.txt', '朋友部署指南.md',
+    '使用说明.md', '如何发布作品.md',
     '我的设置.yml', '_config.yml', '_config.butterfly.yml',
     'package.json', 'package-lock.json', '.nvmrc', '.gitignore',
 ]
