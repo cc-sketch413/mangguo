@@ -11,11 +11,11 @@ nav:
   fixed: true
 
 # ---------- 菜单 ----------
+# 「作品库」母菜单已去掉：作品墙直接做在首页（最近更新 / 完结合集 两栏目）。
+# /library/ 页面保留（按漫画、小说分类浏览），需要时可在菜单里加回。
 menu:
   首页: / || fas fa-home
-  作品库:
-    最近更新: /library/ || fas fa-clock
-    补链合集: /relink/ || fas fa-link
+  补链合集: /relink/ || fas fa-link
   获取须知:
     发布站获取须知: /guide/ || fas fa-book-open
     官网漫画购买教程: /tutorial/ || fas fa-cart-shopping

@@ -6,8 +6,9 @@
      {% dl 百度网盘 || https://pan.baidu.com/s/xxx || 提取码：bread %}
      {% dlbox 漫画总链接 %} ... 多个 {% dl %} ... {% enddlbox %}
      {% tip warn %} 提示内容 {% endtip %}
-     {% worklist %}              列出全部作品
-     {% worklist 漫画 || 8 %}     只要漫画，最多 8 个
+     {% worklist %}                            列出全部作品
+     {% worklist 漫画 || 8 %}                   只要漫画，最多 8 个
+     {% worklist 全部 || 999 || completed %}     全部已完结作品（第三位是状态筛选）
      {% progress 2 || 12 %}      进度条 2/12
      {% workhead 类型 || 状态 || 原作者 || 进度 %}
 
@@ -101,10 +102,14 @@ hexo.extend.tag.register('dlbox', function (args, content) {
 }, { ends: true });
 
 /* ---------- {% tip %} ... {% endtip %} ---------- */
+/* tag 的 content 是原始 markdown，必须手动渲染一遍，
+   否则 `**加粗**`、`[链接](url)` 会原样显示成星号和方括号。
+   （custom.css 里已备好 .hb-tip p 的首尾边距，配合渲染出的 <p>） */
 hexo.extend.tag.register('tip', function (args, content) {
   const a = parseArgs(args);
   const kind = a[0] || 'info';
-  return `<div class="hb-tip hb-tip-${esc(kind)}">${content}</div>`;
+  const html = hexo.render.renderSync({ text: content, engine: 'markdown' });
+  return `<div class="hb-tip hb-tip-${esc(kind)}">${html}</div>`;
 }, { ends: true });
 
 /* ---------- {% copy 值 || 显示文本 %} ----------
@@ -130,18 +135,27 @@ hexo.extend.tag.register('progress', function (args) {
     + `<span class="hb-progress-txt">已发布 <b>${done}</b> / ${total || '?'}</span></div>`;
 });
 
-/* ---------- {% worklist 分类 || 数量 %} ---------- */
+/* ---------- {% worklist 分类 || 数量 || 状态 %} ---------- */
+/* 分类写「全部」或留空 = 不限分类；
+   第三位可选状态筛选：ongoing 连载中 / completed 已完结 / hiatus 暂停 / planned 预告 */
 hexo.extend.tag.register('worklist', function (args) {
   const a = parseArgs(args);
-  const wantCat = a[0] || '';
+  const rawCat = a[0] || '';
+  const wantCat = rawCat === '全部' ? '' : rawCat;
   const limit = Number(a[1]) || 999;
+  const wantStatus = a[2] || '';
 
   const posts = hexo.locals.get('posts');
   if (!posts || !posts.length) {
     return '<p style="color:#93a3af">（还没有作品）</p>';
   }
 
-  let list = posts.filter(p => {
+  // ⚠ 关键：hexo.locals.get('posts') 是 warehouse 的 _Query 对象。
+  //   _Query.filter() 返回的仍然是 _Query（不是数组），而 _Query.sort(orderby, order)
+  //   要的是「字段名 + 方向」，跟数组的 sort(比较函数) 完全不是一回事 ——
+  //   直接传比较函数会被静默忽略，导致「按最近更新排序」失效、顺序恒等于原始顺序。
+  //   必须先 toArray() 变成真数组，才能用标准数组的 filter / sort。
+  let list = posts.toArray().filter(p => {
     if (p.categories && p.categories.length) {
       const names = p.categories.toArray().map(c => c.name);
       if (names.indexOf('公告') >= 0) return false;   // 公告不算作品
@@ -149,12 +163,16 @@ hexo.extend.tag.register('worklist', function (args) {
     } else {
       if (wantCat) return false;
     }
+    if (wantStatus && (p.work_status || 'ongoing') !== wantStatus) return false;
     return true;
   });
 
   list = list.sort((x, y) => (y.updated || y.date) - (x.updated || x.date)).slice(0, limit);
 
-  if (!list.length) return `<p style="color:#93a3af">（没有找到${wantCat ? '「' + esc(wantCat) + '」分类下的' : ''}作品）</p>`;
+  if (!list.length) {
+    if (wantStatus === 'completed') return '<p style="color:#93a3af">还没有完结的作品，完结后会归档到这里。</p>';
+    return `<p style="color:#93a3af">（没有找到${wantCat ? '「' + esc(wantCat) + '」分类下的' : ''}作品）</p>`;
+  }
 
   return '<div class="hb-work-grid">' + list.map(p => {
     const names = p.categories && p.categories.length ? p.categories.toArray().map(c => c.name) : [];
