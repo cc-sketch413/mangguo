@@ -16,9 +16,8 @@ echo ==================================================
 echo.
 
 echo [1/2] 本地构建（先验一遍，避免推错东西）
-call hexo clean
-if errorlevel 1 goto fail
-call hexo generate
+rem npm run build：先跑 prebuild 记录作品修改时间快照，再执行 hexo 构建
+call npm run build
 if errorlevel 1 goto fail
 echo 本地构建通过。
 echo.
