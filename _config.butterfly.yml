@@ -15,6 +15,7 @@ nav:
 # /library/ 页面保留（按漫画、小说分类浏览），需要时可在菜单里加回。
 menu:
   首页: / || fas fa-home
+  小说: /novels/ || fas fa-book
   补链合集: /relink/ || fas fa-link
   获取须知:
     发布站获取须知: /guide/ || fas fa-book-open
@@ -221,3 +222,4 @@ inject:
   bottom:
     - <script src="/js/hb-download.js"></script>
     - <script src="/js/hb-effects.js"></script>
+    - <script src="/js/hb-novel.js"></script>

@@ -556,3 +556,140 @@ a:hover { color: var(--hb-primary-d); }
 .recent-post-item:hover {
   box-shadow: 0 18px 40px rgba(120, 100, 60, .16) !important;
 }
+
+/* ---------------- 小说下载区（输密码解锁 TXT / EPUB） ---------------- */
+.hb-novel-empty {
+  padding: 36px 0;
+  text-align: center;
+  color: #93a3af;
+  font-size: 14px;
+}
+.hb-novel-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(336px, 1fr));
+  gap: 18px;
+  margin: 22px 0 8px;
+}
+.hb-novel {
+  display: flex;
+  gap: 14px;
+  padding: 14px;
+  border-radius: var(--hb-radius);
+  background: var(--card-bg, #fff);
+  border: 1px solid rgba(128, 128, 128, .18);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, .05);
+  transition: all .28s ease;
+}
+.hb-novel:hover {
+  border-color: var(--hb-novel);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, .11);
+}
+.hb-novel-cover {
+  flex: 0 0 104px;
+  width: 104px;
+  aspect-ratio: 3 / 4;
+  border-radius: 10px;
+  overflow: hidden;
+  background: rgba(128, 128, 128, .1);
+}
+.hb-novel-cover img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.hb-novel-cover .hb-cover-gen span { font-size: 13px; }
+.hb-novel-body { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.hb-novel-title {
+  font-size: 15.5px;
+  font-weight: 700;
+  line-height: 1.4;
+  color: var(--font-color, #1e2a32);
+}
+.hb-novel-original {
+  display: block;
+  font-style: normal;
+  font-size: 11.5px;
+  opacity: .55;
+  margin-top: 3px;
+}
+.hb-novel-tags { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 7px; }
+.hb-novel-tags em {
+  font-style: normal;
+  font-size: 11px;
+  padding: 1.5px 8px;
+  border-radius: 6px;
+  background: rgba(107, 127, 215, .13);
+  color: var(--hb-novel);
+}
+.hb-novel-intro {
+  margin: 8px 0 0;
+  font-size: 12.5px;
+  line-height: 1.7;
+  opacity: .78;
+}
+/* 密码行 */
+.hb-novel-lock { margin-top: auto; padding-top: 10px; }
+.hb-novel-lock.is-done { display: none; }
+.hb-novel-lock-row { display: flex; gap: 8px; }
+.hb-novel-pw {
+  flex: 1;
+  min-width: 0;
+  padding: 7px 11px;
+  font-size: 13px;
+  border-radius: 9px;
+  border: 1px solid rgba(128, 128, 128, .3);
+  background: transparent;
+  color: inherit;
+  outline: none;
+  transition: border-color .2s ease;
+}
+.hb-novel-pw:focus { border-color: var(--hb-novel); }
+.hb-novel-btn {
+  flex: 0 0 auto;
+  padding: 7px 15px;
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: 9px;
+  border: none;
+  cursor: pointer;
+  background: var(--hb-novel);
+  color: #fff;
+  transition: filter .2s ease;
+}
+.hb-novel-btn:hover { filter: brightness(1.1); }
+.hb-novel-msg { display: block; margin-top: 6px; font-size: 12px; min-height: 1em; }
+.hb-novel-msg.is-err  { color: #e05c5c; }
+.hb-novel-msg.is-warn { color: var(--hb-warn); }
+/* 解锁后的下载区 */
+.hb-novel-files { margin-top: 10px; display: flex; flex-direction: column; gap: 7px; }
+.hb-novel-file {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 8px 11px;
+  border-radius: 9px;
+  border: 1px solid rgba(107, 127, 215, .35);
+  background: rgba(107, 127, 215, .07);
+  color: inherit;
+  text-decoration: none !important;
+  font-size: 13px;
+  transition: all .2s ease;
+}
+.hb-novel-file:hover {
+  background: var(--hb-novel);
+  border-color: var(--hb-novel);
+  color: #fff;
+}
+.hb-nf-ico { flex: 0 0 auto; display: flex; }
+.hb-nf-main { flex: 1; min-width: 0; }
+.hb-nf-main b { font-weight: 600; }
+.hb-nf-main i { font-style: normal; font-size: 11.5px; opacity: .6; margin-left: 7px; }
+.hb-nf-arrow { flex: 0 0 auto; opacity: .6; display: flex; transition: transform .2s ease; }
+.hb-novel-file:hover .hb-nf-arrow { opacity: 1; transform: translateX(3px); }
+
+/* 暗色模式：小说蓝调亮一点，保证对比度 */
+[data-theme="dark"] {
+  --hb-novel: #8b9ded;
+}
+
+@media (max-width: 520px) {
+  .hb-novel-grid { grid-template-columns: 1fr; }
+  .hb-novel-cover { flex: 0 0 84px; width: 84px; }
+  .hb-novel { gap: 11px; padding: 12px; }
+}

@@ -9,6 +9,7 @@
      {% worklist %}                            列出全部作品
      {% worklist 漫画 || 8 %}                   只要漫画，最多 8 个
      {% worklist 全部 || 999 || completed %}     全部已完结作品（第三位是状态筛选）
+     {% novels %}                              小说下载区（数据源 source/_data/novels.yml）
      {% progress 2 || 12 %}      进度条 2/12
      {% workhead 类型 || 状态 || 原作者 || 进度 %}
 
@@ -207,4 +208,58 @@ hexo.extend.tag.register('workhead', function (args) {
     + `<span class="hb-wh-item"><label>原作者</label><b>${esc(author || '—')}</b></span>`
     + `<span class="hb-wh-item"><label>汉化进度</label><b>${esc(prog || '—')}</b></span>`
     + '</div>';
+});
+
+/* ---------- {% novels %} —— 小说下载区（输密码后直接下载 TXT / EPUB） ----------
+   数据源：source/_data/novels.yml
+   - 安全性定位：**只是「门帘」**。纯静态站没有后端，文件本身仍是可直链访问的，
+     懂技术的人若知道路径可以直接下载。要真正保护得改成「文件加密 + 前端解密」。
+   - 密码存的是 SHA-256 哈希（不可逆），前端输入后本地算哈希比对，正确才展开下载按钮；
+     所以密码明文不会出现在网站源码 / 公开仓库里。
+   - 全站统一密码放 novels.yml 顶层的 password_hash，单本可用同名字段覆盖。
+*/
+hexo.extend.tag.register('novels', function () {
+  const data = hexo.locals.get('data') || {};
+  const conf = data.novels || {};
+  const list = Array.isArray(conf.novels) ? conf.novels : [];
+  const defaultHash = conf.password_hash || '';
+
+  if (!list.length) {
+    return '<p class="hb-novel-empty">小说区还在准备中，敬请期待。</p>';
+  }
+
+  return '<div class="hb-novel-grid">' + list.map(n => {
+    const hash = String(n.password_hash || defaultHash || '');
+    const files = (Array.isArray(n.files) ? n.files : []).filter(f => f && f.path);
+    const fileHTML = files.map(f =>
+      `<a class="hb-novel-file" href="${esc(f.path)}" download>`
+      + `<span class="hb-nf-ico">${ICON_DL}</span>`
+      + `<span class="hb-nf-main"><b>${esc(f.name || '下载')}</b>`
+      + (f.size ? `<i>${esc(f.size)}</i>` : '')
+      + '</span>'
+      + `<span class="hb-nf-arrow">${ICON_ARROW}</span>`
+      + '</a>'
+    ).join('');
+
+    const meta = [];
+    if (n.author) meta.push(esc(n.author));
+    if (n.status) meta.push(esc(n.status));
+
+    return `<div class="hb-novel" data-hash="${esc(hash)}">`
+      + `<span class="hb-novel-cover">${coverHTML(n)}</span>`
+      + `<div class="hb-novel-body">`
+      + `<b class="hb-novel-title">${esc(n.title || '未命名')}</b>`
+      + (n.original ? `<i class="hb-novel-original">${esc(n.original)}</i>` : '')
+      + (meta.length ? `<span class="hb-novel-tags">${meta.map(m => `<em>${m}</em>`).join('')}</span>` : '')
+      + (n.intro ? `<p class="hb-novel-intro">${esc(String(n.intro).trim()).replace(/\n+/g, '<br>')}</p>` : '')
+      + '<div class="hb-novel-lock">'
+      + '<div class="hb-novel-lock-row">'
+      + '<input type="password" class="hb-novel-pw" placeholder="输入下载密码" autocomplete="off" spellcheck="false">'
+      + '<button type="button" class="hb-novel-btn">解锁下载</button>'
+      + '</div>'
+      + '<span class="hb-novel-msg"></span>'
+      + '</div>'
+      + `<div class="hb-novel-files" hidden>${fileHTML || '<span class="hb-novel-msg">（这本书还没放文件）</span>'}</div>`
+      + '</div></div>';
+  }).join('') + '</div>';
 });
