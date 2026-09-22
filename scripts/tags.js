@@ -215,13 +215,12 @@ hexo.extend.tag.register('workhead', function (args) {
     + '</div>';
 });
 
-/* ---------- {% novels %} —— 小说下载区（输密码后直接下载 zip） ----------
+/* ---------- {% novels %} —— 小说下载区（输密码后直接下载文件） ----------
    数据源：source/_data/novels.yml
-   - 每本小说一个独立密码（互不相同），存成该本自己的 password_hash。
-   - 密码有两种写法：
-       ① password_hash: "xxxx"   存 SHA-256 哈希（推荐，明文不进仓库）
-       ② password: 我的密码       直接写明文，构建时自动算哈希
-       （② 会明文留在 novels.yml 里，公开仓库会被看到，不推荐）
+   - 每本小说一个独立密码（互不相同），由站主自己设置。
+   - 密码写法（推荐直接写明文，不用跑任何脚本）：
+       ① password: 我的密码       直接写明文，构建时自动转成哈希（最简单，推荐）
+       ② password_hash: "xxxx"   存 SHA-256 哈希（进阶，明文不进 novels.yml）
    - 安全性定位：**只是「门帘」**。纯静态站没有后端，文件本身仍是可直链访问的，
      懂技术的人若知道路径可以直接下载。要真正保护，请把 zip 本身也加压缩密码
      （zip 密码 = 本本密码），这样就算文件被直链下载，没密码也解不开。
@@ -238,8 +237,16 @@ hexo.extend.tag.register('novels', function () {
   return '<div class="hb-novel-grid">' + list.map(n => {
     const hash = String(n.password_hash || (n.password ? sha256Hex(n.password) : ''));
     const files = (Array.isArray(n.files) ? n.files : []).filter(f => f && f.path);
+    // 文件路径统一规整：反斜杠→正斜杠、确保以 / 开头（绝对路径），
+    // 再用 encodeURI 编码空格/中文等，避免子路径部署或含空格文件名时下载 404。
+    const fileURL = p => {
+      let s = String(p == null ? '' : p).replace(/\\/g, '/').trim();
+      if (!s) return '';
+      if (s.charAt(0) !== '/') s = '/' + s;
+      return s;
+    };
     const fileHTML = files.map(f =>
-      `<a class="hb-novel-file" href="${esc(f.path)}" download>`
+      `<a class="hb-novel-file" href="${esc(encodeURI(fileURL(f.path)))}" download>`
       + `<span class="hb-nf-ico">${ICON_DL}</span>`
       + `<span class="hb-nf-main"><b>${esc(f.name || '下载')}</b>`
       + (f.size ? `<i>${esc(f.size)}</i>` : '')

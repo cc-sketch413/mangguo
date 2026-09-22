@@ -88,7 +88,7 @@
 
 ■ source/files/  —— 小说文件
 
-  放什么：小说的 zip 压缩包（一本多卷就每卷一个 zip）。
+  放什么：小说的 zip 或 epub 文件（一本多卷就每卷一个文件）。
   例：dhldxn-vol1.zip、dhldxn-vol2.zip、dhldxn-vol3.zip
 
   打包时建议给 zip 加「压缩密码」，密码设成和这本小说的下载密码一样。
@@ -101,8 +101,8 @@
   novels.yml：小说的书名、简介、封面、文件路径、下载密码都写在这。
   加一本小说 = 文件丢进 source/files/ + 在这里加一条。
 
-  每本小说一个独立的下载密码（password_hash，各不相同）：
-  用「工具/算密码.py」算出哈希填进去（命令见 novels.yml 顶部注释）。
+  每本小说一个独立的下载密码，直接写 password: 明文就行（不用跑任何脚本）。
+  访客在小说页输入这个密码才能下载。
 
 
 ■ source/img/cover/  —— 作品封面
@@ -172,9 +172,9 @@
   作品更新一话         → 编辑 source/_posts/ 里那个 .md
                         （保存后自动置顶）
 
-  加一本小说           → 打 zip 丢进 source/files/
-                        + 用 工具/算密码.py 算密码哈希
+  加一本小说           → 文件丢进 source/files/
                         + 在 source/_data/novels.yml 加一条
+                        （密码直接写 password: 明文）
 
   网盘链接挂了要补链   → source/relink/index.md 里加一条记录
                         （记得同步改作品页里的链接）

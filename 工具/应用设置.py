@@ -11,8 +11,8 @@
   2. 写入 _config.butterfly.yml 的社交图标、公告卡密码、主题色
 
 注意：小说下载区的密码是「每本小说一个」，不在这里统一设置 ——
-加小说时用 工具/算密码.py 算出哈希，填到 source/_data/novels.yml
-里对应那本的 password_hash 即可（本脚本不再碰 novels.yml）。
+加小说时在 source/_data/novels.yml 里那本下面写 password: 明文即可
+（构建时自动转哈希，不用跑脚本；本脚本不碰 novels.yml）。
 
 页面正文里的 %%站名%% %%署名%% %%密码%% %%微博%% %%邮箱%% 占位符
 由 scripts/render-settings.js 在「渲染时」替换 —— 这样源文件里始终保留占位符，
