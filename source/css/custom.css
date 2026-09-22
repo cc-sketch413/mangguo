@@ -658,6 +658,10 @@ a:hover { color: var(--hb-primary-d); }
 .hb-novel-msg.is-warn { color: var(--hb-warn); }
 /* 解锁后的下载区 */
 .hb-novel-files { margin-top: 10px; display: flex; flex-direction: column; gap: 7px; }
+/* ⚠ 必须显式再声明一次 [hidden]：
+   hidden 属性靠 UA 样式表的 [hidden]{display:none} 生效，优先级最低，
+   上面这行的 display:flex 会把它覆盖掉 —— 下载链接就会在解锁前一直显示。 */
+.hb-novel-files[hidden] { display: none; }
 .hb-novel-file {
   display: flex;
   align-items: center;
