@@ -20,6 +20,11 @@
    ============================================================ */
 'use strict';
 
+const crypto = require('crypto');
+function sha256Hex(s) {
+  return crypto.createHash('sha256').update(String(s == null ? '' : s), 'utf8').digest('hex');
+}
+
 /* 把参数统一解析成数组。Hexo 可能已经把参数拆好，也可能没有 */
 function parseArgs(raw) {
   const s = Array.isArray(raw) ? raw.join(' ') : String(raw == null ? '' : raw);
@@ -210,26 +215,28 @@ hexo.extend.tag.register('workhead', function (args) {
     + '</div>';
 });
 
-/* ---------- {% novels %} —— 小说下载区（输密码后直接下载 TXT / EPUB） ----------
+/* ---------- {% novels %} —— 小说下载区（输密码后直接下载 zip） ----------
    数据源：source/_data/novels.yml
+   - 每本小说一个独立密码（互不相同），存成该本自己的 password_hash。
+   - 密码有两种写法：
+       ① password_hash: "xxxx"   存 SHA-256 哈希（推荐，明文不进仓库）
+       ② password: 我的密码       直接写明文，构建时自动算哈希
+       （② 会明文留在 novels.yml 里，公开仓库会被看到，不推荐）
    - 安全性定位：**只是「门帘」**。纯静态站没有后端，文件本身仍是可直链访问的，
-     懂技术的人若知道路径可以直接下载。要真正保护得改成「文件加密 + 前端解密」。
-   - 密码存的是 SHA-256 哈希（不可逆），前端输入后本地算哈希比对，正确才展开下载按钮；
-     所以密码明文不会出现在网站源码 / 公开仓库里。
-   - 全站统一密码放 novels.yml 顶层的 password_hash，单本可用同名字段覆盖。
+     懂技术的人若知道路径可以直接下载。要真正保护，请把 zip 本身也加压缩密码
+     （zip 密码 = 本本密码），这样就算文件被直链下载，没密码也解不开。
 */
 hexo.extend.tag.register('novels', function () {
   const data = hexo.locals.get('data') || {};
   const conf = data.novels || {};
   const list = Array.isArray(conf.novels) ? conf.novels : [];
-  const defaultHash = conf.password_hash || '';
 
   if (!list.length) {
     return '<p class="hb-novel-empty">小说区还在准备中，敬请期待。</p>';
   }
 
   return '<div class="hb-novel-grid">' + list.map(n => {
-    const hash = String(n.password_hash || defaultHash || '');
+    const hash = String(n.password_hash || (n.password ? sha256Hex(n.password) : ''));
     const files = (Array.isArray(n.files) ? n.files : []).filter(f => f && f.path);
     const fileHTML = files.map(f =>
       `<a class="hb-novel-file" href="${esc(f.path)}" download>`

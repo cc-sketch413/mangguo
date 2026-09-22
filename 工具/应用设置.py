@@ -9,7 +9,10 @@
 它会做这些事（幂等，重复跑不会有副作用）：
   1. 写入 _config.yml 的站名 / 署名（保留行尾注释）
   2. 写入 _config.butterfly.yml 的社交图标、公告卡密码、主题色
-  3. 按新密码重算 source/_data/novels.yml 的 password_hash
+
+注意：小说下载区的密码是「每本小说一个」，不在这里统一设置 ——
+加小说时用 工具/算密码.py 算出哈希，填到 source/_data/novels.yml
+里对应那本的 password_hash 即可（本脚本不再碰 novels.yml）。
 
 页面正文里的 %%站名%% %%署名%% %%密码%% %%微博%% %%邮箱%% 占位符
 由 scripts/render-settings.js 在「渲染时」替换 —— 这样源文件里始终保留占位符，
@@ -17,7 +20,6 @@
 
 刻意不依赖 PyYAML —— 构建机上不一定装了这个库。
 """
-import hashlib
 import pathlib
 import re
 import sys
@@ -123,11 +125,6 @@ def main():
     if color:
         for key in COLOR_KEYS:
             sub_file(BF, r'^(  %s: ).*$' % key, '\\g<1>"%s"' % color)
-
-    if pw:
-        h = hashlib.sha256(pw.encode('utf-8')).hexdigest()
-        if sub_file('source/_data/novels.yml', r'^password_hash:.*$', 'password_hash: "%s"' % h):
-            done.append('小说下载密码')
 
     print('[OK] 已应用设置' + ('：' + '、'.join(done) if done else '（无变化）'))
 

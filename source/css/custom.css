@@ -557,7 +557,7 @@ a:hover { color: var(--hb-primary-d); }
   box-shadow: 0 18px 40px rgba(120, 100, 60, .16) !important;
 }
 
-/* ---------------- 小说下载区（输密码解锁 TXT / EPUB） ---------------- */
+/* ---------------- 小说下载区（输密码解锁 zip） ---------------- */
 .hb-novel-empty {
   padding: 36px 0;
   text-align: center;

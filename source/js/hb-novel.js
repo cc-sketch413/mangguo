@@ -56,7 +56,7 @@
           if ((c.getAttribute('data-hash') || '').trim() === want) unlock(c);
         });
       } else {
-        setMsg(card, '密码不对，再看看「获取须知」', 'err');
+        setMsg(card, '密码不对，请核对后再试', 'err');
         if (input) { input.value = ''; input.focus(); }
       }
     }, function () {
