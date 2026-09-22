@@ -26,9 +26,9 @@
 
 novels:
   # ---- 照抄下面这段改内容即可 ----
-  # - title: 小说书名
-  #   original: 原名（可选，日文/韩文原名）
-  #   author: 原作者（可选）
+  # - title: 培育室里的雄性
+  #   original: 사육실의 수컷들
+  #   author: 세라비이
   #   cover: /img/cover/xxx.jpg        # 可选，不写就按书名自动生成渐变封面
   #   status: 已完结                    # 可选，随便写，只是个标签
   #   intro: |
@@ -36,8 +36,11 @@ novels:
   #   password_hash: "用算密码.py 算出来的那串哈希"   # ★ 每本一个，各不相同
   #   files:
   #     - name: 第1卷（EPUB）
-  #       path: /files/xxx-vol1.zip
-  #       size: 12.3 MB                  # 可选
+  #       path: files\pysldxx\sayugsilyi sukeosdeul 1 - serabii.epub
+  #       size: 1.61 MB                  # 可选
   #     - name: 第2卷（EPUB）
-  #       path: /files/xxx-vol2.zip
-  #       size: 11.8 MB
+  #       path: files\pysldxx\sayugsilyi sukeosdeul 2 - serabii.epub
+  #       size: 1.61 MB
+  #     - name: 第3卷（EPUB）
+  #       path: files\pysldxx\sayugsilyi sukeosdeul 3 - serabii.epub
+  #       size: 1.61 MB
