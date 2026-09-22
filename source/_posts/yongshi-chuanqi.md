@@ -43,7 +43,7 @@ work_episodes: 外传6-外传7 已发布
 
 ## 下载
 
-{% dlbox 最新话（外传5） %}
+{% dlbox 最新话（外传6-外传7） %}
 {% dl UC || https://drive.uc.cn/s/5e383afaf85b4 || 提取码：vSVa %}
 {% dl 百度网盘 || https://pan.baidu.com/s/1xwv5CgVnjDprrLyuGIo2ig || 提取码：92fr %}
 {% enddlbox %}
