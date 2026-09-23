@@ -60,8 +60,8 @@ work_episodes: 01 已发布
 ## 下载
 
 {% dlbox 最新话（01） %}
-{% dl UC || https://drive.uc.cn/s/3828afe906f54 || 提取码：ThDJ %}
-{% dl 百度网盘 || https://pan.baidu.com/s/1D01YiTi4-_GUEmYAdT9gRw || 提取码：9jj9 %}
+{% dl UC || https://drive.uc.cn/s/922d5e4d5c514 || 提取码：N4ba %}
+{% dl 百度网盘 || https://pan.baidu.com/s/1dg9KvNRmPDVk29QMUX4tfQ || 提取码：w9ga %}
 {% enddlbox %}
 
 ## 更新记录
