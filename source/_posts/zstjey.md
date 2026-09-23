@@ -1,6 +1,6 @@
 ---
 title: 只是体检而已
-date: 2026-09-18 7:38:00
+date: 2026-09-23 21:21:00
 # ★ 不要写 updated 字段：站点按「文件最后修改时间」自动置顶。
 #   更新作品时只要编辑并保存这个文件，首页和作品库就会自动把它排到最前面。
 categories: [漫画]
@@ -9,10 +9,10 @@ cover: /img/cover/zstjey.jpg
 description: 只是体检而已
 work_status: ongoing        # ongoing 连载中 / completed 已完结 / hiatus 暂停 / planned 预告
 work_original: 건강검진을 받으러 갔을 뿐인데
-work_episodes: 特别篇01 已发布
+work_episodes: 特别篇02 已发布
 ---
 
-{% workhead 漫画 || 连载中 || Alice Crazy,탱글탱글 || 特别篇01 已发布 %}
+{% workhead 漫画 || 连载中 || Alice Crazy,탱글탱글 || 特别篇02 已发布 %}
 
 ## 作品简介
 
@@ -49,14 +49,14 @@ work_episodes: 特别篇01 已发布
 
 ## 下载
 
-{% dlbox 最新话（特别篇01） %}
-{% dl UC || https://drive.uc.cn/s/048cbe89464e4 || 提取码：v3gY %}
-{% dl 百度网盘 || https://pan.baidu.com/s/1r7HmQ7A2p2Y4DKjBuHSzXA || 提取码：3m5k %}
+{% dlbox 最新话（特别篇02） %}
+{% dl UC || https://drive.uc.cn/s/76d04620b42b4 || 提取码：AXgS %}
+{% dl 百度网盘 || https://pan.baidu.com/s/1k97OnLYfQsMMM_UDbe8bEw || 提取码：an38 %}
 {% enddlbox %}
 
 ## 更新记录
 
-- 2026-09-18 特别篇01更新
+- 2026-09-23 特别篇02更新
 - 2026-09-18 作品页上线
 
 <!--
