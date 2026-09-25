@@ -9,10 +9,10 @@ cover: /img/cover/beikunhou.jpg
 description: 被困后，与魔物的那些事
 work_status: ongoing        # ongoing 连载中 / completed 已完结 / hiatus 暂停 / planned 预告
 work_original: 마물들과 던전에 갇혔다
-work_episodes: 08-09 已发布
+work_episodes: 10-11 已发布
 ---
 
-{% workhead 漫画 || 连载中 || 콘티메이커，시제트 || 08-09 已发布 %}
+{% workhead 漫画 || 连载中 || 콘티메이커，시제트 || 10-11 已发布 %}
 
 ## 作品简介
 
@@ -56,14 +56,14 @@ work_episodes: 08-09 已发布
 
 ## 下载
 
-{% dlbox 最新话（08-09） %}
-{% dl UC || https://drive.uc.cn/s/35ac44f2bca44 || 提取码：G2UY %}
-{% dl 百度网盘 || https://pan.baidu.com/s/1vBxzMv-VJdajdfXA6IDFDQ || 提取码：srjv %}
+{% dlbox 最新话（10-11） %}
+{% dl UC || https://drive.uc.cn/s/ca01254bd21b4 || 提取码：G2UY %}
+{% dl 百度网盘 || https://pan.baidu.com/s/1rbWoz9TNsLHXmkMoes_XmA || 提取码：ufhp %}
 {% enddlbox %}
 
 ## 更新记录
 
-- 2026-09-18 08-09更新
+- 2026-09-25 10-11更新
 - 2026-09-18 作品页上线
 
 <!--
