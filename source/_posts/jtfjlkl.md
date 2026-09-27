@@ -9,10 +9,10 @@ cover: /img/cover/jtfjlkl.jpg
 description: 将她放进篮筐里
 work_status: ongoing        # ongoing 连载中 / completed 已完结 / hiatus 暂停 / planned 预告
 work_original: 바스켓에 쑤셔 넣어주세요
-work_episodes: 11话 已发布
+work_episodes: 12-13话 已发布
 ---
 
-{% workhead 漫画 || 连载中 || 몬몬,심야작 || 11话 已发布 %}
+{% workhead 漫画 || 连载中 || 몬몬,심야작 || 12-13话 已发布 %}
 
 ## 作品简介
 
@@ -33,14 +33,14 @@ work_episodes: 11话 已发布
 
 ## 下载
 
-{% dlbox 最新话（11话） %}
-{% dl UC || https://drive.uc.cn/s/14b7a4346af04 || 提取码：iLBh %}
-{% dl 百度网盘 || https://pan.baidu.com/s/1gq_bRiX7xUDyzXrohckJ1A || 提取码：fgnk %}
+{% dlbox 最新话（12-13话） %}
+{% dl UC || https://drive.uc.cn/s/3dca69f7e3664 || 提取码：ABZX %}
+{% dl 百度网盘 ||https://pan.baidu.com/s/1LGKOIg3nqRYKQbuNwOTqyA || 提取码：n28t %}
 {% enddlbox %}
 
 ## 更新记录
 
-- 2026-09-18 11话更新
+- 2026-09-27 12-13话更新
 - 2026-09-18 作品页上线
 
 <!--

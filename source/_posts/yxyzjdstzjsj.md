@@ -9,10 +9,10 @@ cover: /img/cover/yxyzjdstzjsj.jpg
 description: 英雄用自己的身体拯救世界
 work_status: ongoing        # ongoing 连载中 / completed 已完结 / hiatus 暂停 / planned 预告
 work_original: 영웅은 몸으로 구원한다
-work_episodes: 50话 已发布
+work_episodes: 51-52话 已发布
 ---
 
-{% workhead 漫画 || 连载中 || 어성초,프레티아 || 50话 已发布 %}
+{% workhead 漫画 || 连载中 || 어성초,프레티아 || 51-52话 已发布 %}
 
 ## 作品简介
 
@@ -51,14 +51,14 @@ work_episodes: 50话 已发布
 
 ## 下载
 
-{% dlbox 最新话（50） %}
-{% dl UC || https://drive.uc.cn/s/f4e13b41d2ab4 || 提取码：dYds %}
-{% dl 百度网盘 || https://pan.baidu.com/s/1s331wVpebudRCc2L7RKOjQ || 提取码：bfqd %}
+{% dlbox 最新话（51-52） %}
+{% dl UC || https://drive.uc.cn/s/2acfeeba10854 || 提取码：qLwN %}
+{% dl 百度网盘 || https://pan.baidu.com/s/1lTmg0hwth0yyeExiW4ZQCQ || 提取码：djfi %}
 {% enddlbox %}
 
 ## 更新记录
 
-- 2026-09-18 50话更新
+- 2026-09-27 51-52话更新
 - 2026-09-18 作品页上线
 
 <!--
