@@ -808,3 +808,56 @@ html.hb-age-lock, html.hb-age-lock body { overflow: hidden !important; }
   .hb-age-deny-bg { animation: none; }
   .hb-age-box { animation: none; }
 }
+
+/* ============================================================
+   RIDIBOOKS 图文教程（折叠面板，仿「Kirikiri」条目风格）
+   用于 source/tutorial/index.md 的官方购买教程页
+   ============================================================ */
+.hb-guide { margin: 22px 0; }
+.hb-guide-head {
+  display: flex; align-items: center; gap: 10px;
+  background: linear-gradient(135deg, #5b7bd5, #3d5cc0);
+  color: #fff; border-radius: 12px;
+  padding: 13px 20px; font-size: 1.12em; font-weight: 700;
+  box-shadow: 0 4px 16px rgba(61, 92, 192, .28);
+}
+.hb-guide-head .hb-guide-ico { display: inline-flex; }
+.hb-guide-head .hb-guide-more { margin-left: auto; opacity: .8; letter-spacing: -2px; font-weight: 900; }
+.hb-guide-intro { margin: 14px 6px 6px; line-height: 2.1; font-size: .96em; }
+.hb-guide-intro code {
+  background: #e9eefb; color: #3d5cc0; border-radius: 6px;
+  padding: 2px 9px; margin: 0 3px; font-size: .9em; white-space: nowrap;
+}
+.hb-guide details {
+  border: 2px solid #5b7bd5; border-radius: 12px;
+  margin: 12px 0; background: rgba(91, 123, 213, .05);
+  overflow: hidden;
+}
+.hb-guide summary {
+  cursor: pointer; list-style: none; user-select: none;
+  padding: 12px 18px; font-weight: 600; color: #3a4a7a;
+  display: flex; align-items: baseline; gap: 9px;
+}
+.hb-guide summary::-webkit-details-marker { display: none; }
+.hb-guide summary::before {
+  content: "\25B6"; font-size: .72em; color: #5b7bd5;
+  transition: transform .2s ease; transform-origin: center;
+}
+.hb-guide details[open] summary::before { transform: rotate(90deg); }
+.hb-guide-body { padding: 2px 20px 18px; }
+.hb-guide-body p { margin: 10px 0; line-height: 1.9; }
+.hb-guide-body p.hb-guide-cap { color: #6a7aa8; font-size: .9em; margin: 2px 0 4px; }
+.hb-guide-body img {
+  display: block; max-width: 100%; height: auto;
+  margin: 6px auto 14px; border-radius: 10px;
+  border: 1px solid #d5def0;
+  box-shadow: 0 3px 14px rgba(60, 80, 140, .13);
+}
+.hb-guide-body a { color: #3d5cc0; font-weight: 600; }
+[data-theme="dark"] .hb-guide-head { background: linear-gradient(135deg, #46599c, #32447e); box-shadow: 0 4px 16px rgba(0, 0, 0, .35); }
+[data-theme="dark"] .hb-guide-intro code { background: #2a3450; color: #9db4ef; }
+[data-theme="dark"] .hb-guide details { border-color: #4a5f9e; background: rgba(70, 89, 156, .12); }
+[data-theme="dark"] .hb-guide summary { color: #aebbdb; }
+[data-theme="dark"] .hb-guide summary::before { color: #7f96d6; }
+[data-theme="dark"] .hb-guide-body img { border-color: #3a4460; box-shadow: 0 3px 14px rgba(0, 0, 0, .4); }
+[data-theme="dark"] .hb-guide-body a { color: #9db4ef; }
