@@ -1,6 +1,6 @@
 ---
 title: 勇者传说
-date: 2026-09-17 15:30:00
+date: 2026-09-30 13:05:00
 # ★ 不要写 updated 字段：站点按「文件最后修改时间」自动置顶。
 #   更新作品时只要编辑并保存这个文件，首页和作品库就会自动把它排到最前面。
 categories: [漫画]
@@ -9,10 +9,10 @@ cover: /img/cover/yongshi-chuanqi.jpg
 description: 勇者传说
 work_status: ongoing        # ongoing 连载中 / completed 已完结 / hiatus 暂停 / planned 预告
 work_original: 용사 이야기 (HERO STORY)
-work_episodes: 外传6-外传7 已发布
+work_episodes: 外传8 已发布
 ---
 
-{% workhead 漫画 || 连载中 || 언니 || 外传6-外传7 已发布 %}
+{% workhead 漫画 || 连载中 || 언니 || 外传8 已发布 %}
 
 ## 作品简介
 
@@ -43,14 +43,14 @@ work_episodes: 外传6-外传7 已发布
 
 ## 下载
 
-{% dlbox 最新话（外传6-外传7） %}
-{% dl UC || https://drive.uc.cn/s/5e383afaf85b4 || 提取码：vSVa %}
-{% dl 百度网盘 || https://pan.baidu.com/s/1xwv5CgVnjDprrLyuGIo2ig || 提取码：92fr %}
+{% dlbox 最新话（外传8） %}
+{% dl UC || https://drive.uc.cn/s/1e2427477bd44 || 提取码：8eFM %}
+{% dl 百度网盘 || https://pan.baidu.com/s/1Qh1jJlB5tHhmr8jpSSXpZg || 提取码：dix4 %}
 {% enddlbox %}
 
 ## 更新记录
 
-- 2026-09-23 外传6-外传7更新
+- 2026-09-30 外传8更新
 - 2026-09-17 作品页上线
 
 <!--
