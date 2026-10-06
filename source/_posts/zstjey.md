@@ -12,7 +12,8 @@ work_original: 건강검진을 받으러 갔을 뿐인데
 work_episodes: 特别篇02 已发布
 ---
 
-{% workhead 漫画 || 连载中 || Alice Crazy,탱글탱글 || 特别篇02 已发布 %}
+<!-- 官网：把下面这行末尾「||」后面补上「名称 | 网址」，例如 RIDI | https://ridibooks.com/xxxx -->
+{% workhead 漫画 || 连载中 || Alice Crazy,탱글탱글 || 特别篇02 已发布 || %}
 
 ## 作品简介
 

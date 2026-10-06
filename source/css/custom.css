@@ -286,6 +286,14 @@ body {
 .hb-st-completed { color: #4caf7d; }
 .hb-st-hiatus    { color: var(--hb-warn); }
 .hb-st-planned   { color: #93a3af; }
+/* 信息条里的「官网」链接 */
+.hb-wh-link {
+  color: var(--hb-primary);
+  text-decoration: none;
+  border-bottom: 1px dashed currentColor;
+}
+.hb-wh-link::after { content: " ↗"; font-size: .82em; opacity: .7; }
+.hb-wh-link:hover { opacity: .78; border-bottom-style: solid; }
 
 /* ---------------- 作品卡片网格 ---------------- */
 .hb-work-grid {

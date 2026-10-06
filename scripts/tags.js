@@ -202,9 +202,28 @@ hexo.extend.tag.register('worklist', function (args) {
 });
 
 /* ---------- {% workhead %} —— 作品页顶部的信息条 ---------- */
+/* 官网参数（可省略）写法：`https://xxx` 或 `RIDI | https://xxx`
+   —— 只写链接时，按钮文字自动取域名。留空则整项不显示。 */
+function officialHTML(raw) {
+  const s = String(raw == null ? '' : raw).trim();
+  if (!s) return '';
+  let name = '', url = s;
+  const i = s.indexOf('|');
+  if (i >= 0) { name = s.slice(0, i).trim(); url = s.slice(i + 1).trim(); }
+  if (!url) return '';
+  if (!/^https?:\/\//i.test(url)) url = 'https://' + url;
+  if (!name) {
+    const m = url.match(/^https?:\/\/([^/?#]+)/i);
+    name = m ? m[1].replace(/^www\./, '') : '官网';
+  }
+  return `<span class="hb-wh-item"><label>官网</label><b>`
+    + `<a class="hb-wh-link" href="${esc(url)}" target="_blank" rel="noopener noreferrer">${esc(name)}</a>`
+    + `</b></span>`;
+}
+
 hexo.extend.tag.register('workhead', function (args) {
   const a = parseArgs(args);
-  // {% workhead 类型 || 状态 || 原作者 || 进度 %}
+  // {% workhead 类型 || 状态 || 原作者 || 进度 || 官网 %}
   const type = a[0], status = a[1], author = a[2], prog = a[3];
   const stCls = Object.keys(STATUS).find(k => STATUS[k] === status) || 'ongoing';
   return `<div class="hb-workhead">`
@@ -212,6 +231,7 @@ hexo.extend.tag.register('workhead', function (args) {
     + `<span class="hb-wh-item"><label>状态</label><b class="hb-st-${esc(stCls)}">${esc(status || '—')}</b></span>`
     + `<span class="hb-wh-item"><label>原作者</label><b>${esc(author || '—')}</b></span>`
     + `<span class="hb-wh-item"><label>汉化进度</label><b>${esc(prog || '—')}</b></span>`
+    + officialHTML(a[4])
     + '</div>';
 });
 

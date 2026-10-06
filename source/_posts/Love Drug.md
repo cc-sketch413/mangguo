@@ -12,7 +12,8 @@ work_original: 러브 드러그(Love Drug)
 work_episodes: 02-03 已发布
 ---
 
-{% workhead 漫画 || 连载中 || 나우，바디바 || 02-03 已发布 %}
+<!-- 官网：把下面这行末尾「||」后面补上「名称 | 网址」，例如 RIDI | https://ridibooks.com/xxxx -->
+{% workhead 漫画 || 连载中 || 나우，바디바 || 02-03 已发布 || %}
 
 ## 作品简介
 
