@@ -32,6 +32,15 @@ comments: false
 2. 保存文件后网站自动更新，本页不需要改 updated 时间。
    ============================================================ -->
 
+## 作品总链接（全集打包）
+
+已完结作品的全集打包链接挂在这里（作品页只放最新话）。
+
+{% dlbox 不知疲倦的男主角们 · 全集（39话） %}
+{% dl UC || https://drive.uc.cn/s/38cdb81de3a84 || 提取码：3vRB %}
+{% dl 百度网盘 || https://pan.baidu.com/s/1m6k7dhNULKzcNXuen80Mjw || 提取码：ubkf %}
+{% enddlbox %}
+
 ## 补链记录
 
 {% tip warn %}
