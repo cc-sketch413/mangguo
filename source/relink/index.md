@@ -38,7 +38,58 @@ comments: false
 
 {% dlbox 不知疲倦的男主角们 · 全集（39话） %}
 {% dl UC || https://drive.uc.cn/s/38cdb81de3a84 || 提取码：3vRB %}
-{% dl 百度网盘 || https://pan.baidu.com/s/1m6k7dhNULKzcNXuen80Mjw || 提取码：ubkf %}
+{% enddlbox %}
+
+{% dlbox 哥哥的朋友很美味 · 全集（6话） %}
+{% dl UC || https://drive.uc.cn/s/072a4ec82ebe4 || 提取码：DSVq %}
+{% enddlbox %}
+
+{% dlbox 守护神的新娘 · 全集（19话） %}
+{% dl UC || https://drive.uc.cn/s/07ea46cd9b524 || 提取码：R5qj %}
+{% enddlbox %}
+
+{% dlbox 无法逃脱男主手掌 · 全集（05话） %}
+{% dl UC || https://drive.uc.cn/s/cbeb57156e264 || 提取码：a1pa %}
+{% enddlbox %}
+
+{% dlbox 外星人的地球观察论文 · 全集（05话） %}
+{% dl UC || https://drive.uc.cn/s/2e463a00b8754 || 提取码：mfFd %}
+{% enddlbox %}
+
+{% dlbox 溢满之时 · 全集（02话） %}
+{% dl UC || https://drive.uc.cn/s/f9612fd9c5e74 || 提取码：ihpQ %}
+{% enddlbox %}
+
+{% dlbox 姐姐请为我的初次爱恋负责 · 全集（13话） %}
+{% dl UC || https://drive.uc.cn/s/09c195d08ccd4 || 提取码：cVvR %}
+{% enddlbox %}
+
+{% dlbox 在放纵之夜航行 · 全集（19话） %}
+{% dl UC || https://drive.uc.cn/s/0549162985bd4 || 提取码：vUVp %}
+{% enddlbox %}
+
+{% dlbox 达哈伦的修女 · 连载中（17话，1-3话已替换吴老师） %}
+{% dl UC || https://drive.uc.cn/s/e11681883c014 || 提取码：MQ9z %}
+{% enddlbox %}
+
+{% dlbox 英雄用自己的身体拯救世界 · 连载中（53话） %}
+{% dl UC || https://drive.uc.cn/s/c8de094c5ece4 || 提取码：HDj1 %}
+{% enddlbox %}
+
+{% dlbox 被困后，与魔物的那些事· 连载中（12话） %}
+{% dl UC || https://drive.uc.cn/s/3e543ca0e7314 || 提取码：F1rB %}
+{% enddlbox %}
+
+{% dlbox Love Drug· 连载中（03话） %}
+{% dl UC || https://drive.uc.cn/s/32f5e246db284 || 提取码：QeAq %}
+{% enddlbox %}
+
+{% dlbox 勇者传说· 连载中（外传08） %}
+{% dl UC || https://drive.uc.cn/s/3c8b05c4c4fc4 || 提取码：JFU7 %}
+{% enddlbox %}
+
+{% dlbox 只是体检而已· 连载中（特别篇02） %}
+{% dl UC || https://drive.uc.cn/s/a293188513dc4 || 提取码：Qbkv %}
 {% enddlbox %}
 
 ## 补链记录

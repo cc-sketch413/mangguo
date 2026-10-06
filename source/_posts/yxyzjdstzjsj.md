@@ -12,8 +12,7 @@ work_original: 영웅은 몸으로 구원한다
 work_episodes: 53话 已发布
 ---
 
-<!-- 官网：把下面这行末尾「||」后面补上「名称 | 网址」，例如 RIDI | https://ridibooks.com/xxxx -->
-{% workhead 漫画 || 连载中 || 어성초,프레티아 || 53话 已发布 || %}
+{% workhead 漫画 || 连载中 || 어성초,프레티아 || 53话 已发布 || RIDI | https://ridibooks.com/books/3092056379 %}
 
 ## 作品简介
 

@@ -12,8 +12,7 @@ work_original: 성녀의 꽃잎은 젖어든다
 work_episodes: 全 39 话
 ---
 
-<!-- 官网：把下面这行末尾「||」后面补上「名称 | 网址」，例如 RIDI | https://ridibooks.com/xxxx -->
-{% workhead 漫画 || 已完结 || 피치라떼 || 全 39 话 || %}
+{% workhead 漫画 || 已完结 || 피치라떼 || 全 39 话 || RIDI | https://ridibooks.com/books/1716003252 %}
 
 ## 作品简介
 

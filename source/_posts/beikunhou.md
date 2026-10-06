@@ -12,8 +12,7 @@ work_original: 마물들과 던전에 갇혔다
 work_episodes: 12 已发布
 ---
 
- LEZHIN | https://www.lezhin.com/ko/comic/dungeon_with_monsters -->
-{% workhead 漫画 || 连载中 || 콘티메이커，시제트 || 12 已发布 || %}
+{% workhead 漫画 || 连载中 || 콘티메이커，시제트 || 12 已发布 || LEZHIN | https://www.lezhin.com/ko/comic/dungeon_with_monsters %}
 
 ## 作品简介
 

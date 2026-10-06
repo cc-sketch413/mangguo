@@ -12,8 +12,7 @@ work_original: 용사 이야기 (HERO STORY)
 work_episodes: 外传8 已发布
 ---
 
-<!-- 官网：把下面这行末尾「||」后面补上「名称 | 网址」，例如 RIDI | https://ridibooks.com/xxxx -->
-{% workhead 漫画 || 连载中 || 언니 || 外传8 已发布 || %}
+{% workhead 漫画 || 连载中 || 언니 || 外传8 已发布 || RIDI | https://ridibooks.com/books/6014000043 %}
 
 ## 作品简介
 
