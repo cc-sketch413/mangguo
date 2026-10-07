@@ -9,10 +9,10 @@ cover: /img/cover/dhldxn.jpg
 description: 达哈伦的修女
 work_status: ongoing        # ongoing 连载中 / completed 已完结 / hiatus 暂停 / planned 预告
 work_original: 다할렌의 무녀
-work_episodes: 17话 已发布
+work_episodes: 18话 已发布
 ---
 
-{% workhead 漫画 || 连载中 || 회오리감자 || 17话 已发布 || LEZHIN | https://www.lezhin.com/ko/comic/dahallen %}
+{% workhead 漫画 || 连载中 || 회오리감자 || 18话 已发布 || LEZHIN | https://www.lezhin.com/ko/comic/dahallen %}
 
 ## 作品简介
 
@@ -35,14 +35,14 @@ work_episodes: 17话 已发布
 
 ## 下载
 
-{% dlbox 最新话（17话） %}
-{% dl UC || https://drive.uc.cn/s/bf0d129c98894 || 提取码：BiG7 %}
-{% dl 百度网盘 || https://pan.baidu.com/s/1Ai68Jn3ScDTsiM8oBTgEpQ || 提取码：e6fn %}
+{% dlbox 最新话（18话） %}
+{% dl UC || https://drive.uc.cn/s/99b825ce28e44 || 提取码：qm36 %}
+{% dl 百度网盘 || https://pan.baidu.com/s/1pUEVbBHA6hbfMFpa_8L29g || 提取码：kag3 %}
 {% enddlbox %}
 
 ## 更新记录
 
-- 2026-10-02 17话更新
+- 2026-10-08 18话更新
 - 2026-09-18 作品页上线
 
 <!--
