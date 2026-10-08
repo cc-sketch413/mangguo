@@ -57,8 +57,8 @@ work_episodes: 13 已发布
 ## 下载
 
 {% dlbox 最新话（13） %}
-{% dl UC || https://drive.uc.cn/s/3e380a7804e74 || 提取码：Siw4 %}
-{% dl 百度网盘 || https://pan.baidu.com/s/13Tjyoo27QQteIKVRce7iuQ || 提取码：67p6 %}
+{% dl UC || https://drive.uc.cn/s/2358add8f2804 || 提取码：H7nb %}
+{% dl 百度网盘 || https://pan.baidu.com/s/1aGiejjssXgjeZeklam0y2g || 提取码：4te3 %}
 {% enddlbox %}
 
 ## 更新记录
