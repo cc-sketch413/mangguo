@@ -69,7 +69,7 @@ comments: false
 {% enddlbox %}
 
 {% dlbox 达哈伦的修女 · 连载中（17话，1-3话已替换吴老师） %}
-{% dl UC || https://drive.uc.cn/s/e11681883c014 || 提取码：MQ9z %}
+{% dl UC || https://drive.uc.cn/s/fd12822f019d4 || 提取码：6txL %}
 {% enddlbox %}
 
 {% dlbox 英雄用自己的身体拯救世界 · 连载中（53话） %}
