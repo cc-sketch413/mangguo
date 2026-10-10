@@ -9,10 +9,10 @@ cover: /img/cover/yxyzjdstzjsj.jpg
 description: 英雄用自己的身体拯救世界
 work_status: ongoing        # ongoing 连载中 / completed 已完结 / hiatus 暂停 / planned 预告
 work_original: 영웅은 몸으로 구원한다
-work_episodes: 53话 已发布
+work_episodes: 54话 已发布
 ---
 
-{% workhead 漫画 || 连载中 || 어성초,프레티아 || 53话 已发布 || RIDI | https://ridibooks.com/books/3092056379 %}
+{% workhead 漫画 || 连载中 || 어성초,프레티아 || 54话 已发布 || RIDI | https://ridibooks.com/books/3092056379 %}
 
 ## 作品简介
 
@@ -51,14 +51,14 @@ work_episodes: 53话 已发布
 
 ## 下载
 
-{% dlbox 最新话（53） %}
-{% dl UC || https://drive.uc.cn/s/a399a0c666494 || 提取码：x6nh %}
-{% dl 百度网盘 || https://pan.baidu.com/s/1i11dQgSZXSsjx7hX0AddBQ || 提取码：mbpe %}
+{% dlbox 最新话（54） %}
+{% dl UC || https://drive.uc.cn/s/935920f4d9c44 || 提取码：xv9z %}
+{% dl 百度网盘 || https://pan.baidu.com/s/1vv_iQiu1kpYYdvf9lagOhA || 提取码：fzn9 %}
 {% enddlbox %}
 
 ## 更新记录
 
-- 2026-10-06 53话更新
+- 2026-10-10 54话更新
 - 2026-09-18 作品页上线
 
 <!--
