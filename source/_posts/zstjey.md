@@ -9,10 +9,10 @@ cover: /img/cover/zstjey.jpg
 description: 只是体检而已
 work_status: ongoing        # ongoing 连载中 / completed 已完结 / hiatus 暂停 / planned 预告
 work_original: 건강검진을 받으러 갔을 뿐인데
-work_episodes: 特别篇02 已发布
+work_episodes: 15话 已发布
 ---
 
-{% workhead 漫画 || 连载中 || Alice Crazy,탱글탱글 || 特别篇02 已发布 || LEZHIN | https://www.lezhin.com/ko/comic/checkup_x %}
+{% workhead 漫画 || 连载中 || Alice Crazy,탱글탱글 || 15话 已发布 || LEZHIN | https://www.lezhin.com/ko/comic/checkup_x %}
 
 ## 作品简介
 
@@ -49,14 +49,14 @@ work_episodes: 特别篇02 已发布
 
 ## 下载
 
-{% dlbox 最新话（特别篇02） %}
-{% dl UC || https://drive.uc.cn/s/76d04620b42b4 || 提取码：AXgS %}
-{% dl 百度网盘 || https://pan.baidu.com/s/1k97OnLYfQsMMM_UDbe8bEw || 提取码：an38 %}
+{% dlbox 最新话（15话） %}
+{% dl UC || https://drive.uc.cn/s/0c1ac9e0c0474 || 提取码：b55Q %}
+{% dl 百度网盘 || https://pan.baidu.com/s/1-FZyqyoe_03ewocs8dEYQw || 提取码：m1dw %}
 {% enddlbox %}
 
 ## 更新记录
 
-- 2026-09-23 特别篇02更新
+- 2026-10-13 15话更新
 - 2026-09-18 作品页上线
 
 <!--
