@@ -1,10 +1,16 @@
 @echo off
-setlocal
+setlocal EnableDelayedExpansion
 cd /d "%~dp0"
 
 rem === 工具路径（写死，双击也不依赖系统 PATH）===
 set "NODE_DIR=C:\Users\D.Q\.workbuddy\binaries\node\versions\22.22.2-2"
-set "PORTABLE_GIT=C:\Users\D.Q\.workbuddy\binaries\PortableGit\versions\1.2.0"
+rem === 版本号不再写死：自动读取 WorkBuddy 记录的 current 版本 ===
+set "PG_VERSIONS=C:\Users\D.Q\.workbuddy\binaries\PortableGit\versions"
+set "PORTABLE_GIT=%PG_VERSIONS%\1.3.0"
+if exist "%PG_VERSIONS%\current" (
+    set /p PG_CUR=<"%PG_VERSIONS%\current"
+    if exist "%PG_VERSIONS%!PG_CUR!\usr\bin\ssh.exe" set "PORTABLE_GIT=%PG_VERSIONS%!PG_CUR!"
+)
 set "PATH=%NODE_DIR%;%PORTABLE_GIT%\mingw64\bin;%PORTABLE_GIT%\usr\bin;%PATH%"
 set "GIT_SSH=%PORTABLE_GIT%\usr\bin\ssh.exe"
 
