@@ -9,10 +9,10 @@ cover: /img/cover/qwjs.jpg
 description: 请勿浇水
 work_status: ongoing        # ongoing 连载中 / completed 已完结 / hiatus 暂停 / planned 预告
 work_original: 물을 주지 마시오
-work_episodes: 序章 已发布
+work_episodes: 01 已发布
 ---
 
-{% workhead 漫画 || 连载中 || 선사멧돼지 || 序章 已发布 || RIDI | https://ridibooks.com/books/1632013958 %}
+{% workhead 漫画 || 连载中 || 선사멧돼지 || 01 已发布 || RIDI | https://ridibooks.com/books/1632013958 %}
 
 ## 作品简介
 
@@ -34,14 +34,14 @@ work_episodes: 序章 已发布
 
 ## 下载
 
-{% dlbox 最新话（序章） %}
-{% dl UC || https://drive.uc.cn/s/93deb7590a8e4 || 提取码：Ns6v %}
-{% dl 百度网盘 || https://pan.baidu.com/s/1J4X6REfM1UygUTPYJ-vyBw || 提取码：uiwm %}
+{% dlbox 最新话（01） %}
+{% dl UC || https://drive.uc.cn/s/a8a2a470fd154 || 提取码：d14t %}
+{% dl 百度网盘 || https://pan.baidu.com/s/1hY5KOQDpXOCp5tTpqNvwfQ || 提取码：w2bf %}
 {% enddlbox %}
 
 ## 更新记录
 
-- 2026-10-11 序章更新
+- 2026-10-19 01更新
 - 2026-10-11 作品页上线
 
 <!--
