@@ -869,3 +869,59 @@ html.hb-age-lock, html.hb-age-lock body { overflow: hidden !important; }
 [data-theme="dark"] .hb-guide summary::before { color: #7f96d6; }
 [data-theme="dark"] .hb-guide-body img { border-color: #3a4460; box-shadow: 0 3px 14px rgba(0, 0, 0, .4); }
 [data-theme="dark"] .hb-guide-body a { color: #9db4ef; }
+
+/* ============================================================
+   链接失效标注（数据源 source/_data/deadlinks.yml，由 工具/巡检链接.py 生成）
+   ============================================================ */
+.hb-dead-badge {
+  display: inline-block;
+  margin-left: 8px;
+  padding: 1px 8px;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1.6;
+  color: #fff;
+  background: #e5484d;
+  border-radius: 999px;
+  vertical-align: 1px;
+}
+.hb-dl.hb-dead {
+  border-color: rgba(229, 72, 77, .45);
+  background: rgba(229, 72, 77, .05);
+}
+.hb-dl.hb-dead:hover {
+  border-color: #e5484d;
+  background: rgba(229, 72, 77, .1);
+  transform: none;
+  box-shadow: 0 3px 12px rgba(229, 72, 77, .15);
+}
+.hb-dl.hb-dead .hb-dl-main b { color: #b33035; text-decoration: line-through; }
+.hb-dl.hb-dead .hb-dl-ico { background: rgba(229, 72, 77, .12); }
+
+/* 补链页顶部的失效警示块 */
+.hb-deadlist {
+  margin: 18px 0;
+  padding: 14px 18px;
+  border-radius: var(--hb-radius);
+  border: 1px solid;
+  line-height: 1.9;
+}
+.hb-deadlist-ok {
+  border-color: rgba(76, 175, 125, .4);
+  background: rgba(76, 175, 125, .08);
+  color: #3a9a6b;
+}
+.hb-deadlist-bad {
+  border-color: rgba(229, 72, 77, .4);
+  background: rgba(229, 72, 77, .07);
+  color: #c0392b;
+}
+.hb-deadlist-hd { font-weight: 700; margin-bottom: 6px; }
+.hb-deadlist ul { margin: 0; padding-left: 20px; }
+.hb-deadlist li { margin: 4px 0; }
+.hb-deadlist code { font-size: .88em; word-break: break-all; }
+
+[data-theme="dark"] .hb-deadlist-ok { background: rgba(76,175,125,.12); color: #6fd39a; }
+[data-theme="dark"] .hb-deadlist-bad { background: rgba(229,72,77,.12); color: #f08a8d; }
+[data-theme="dark"] .hb-dl.hb-dead { background: rgba(229,72,77,.08); }
+[data-theme="dark"] .hb-dl.hb-dead .hb-dl-main b { color: #f08a8d; }

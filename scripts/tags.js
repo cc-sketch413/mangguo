@@ -79,6 +79,22 @@ function noteHTML(note) {
     + '</i>';
 }
 
+/* ---------- 失效链接清单（数据源 source/_data/deadlinks.yml） ---------- */
+/* 由 工具/巡检链接.py 生成；渲染期只读一次，缓存在模块级变量里 */
+let _deadUrlSet = null;
+function deadUrlSet() {
+  if (_deadUrlSet === null) {
+    _deadUrlSet = new Set();
+    try {
+      const data = hexo.locals.get('data') || {};
+      const d = data.deadlinks || {};
+      const arr = Array.isArray(d.dead) ? d.dead : [];
+      for (const it of arr) if (it && it.url) _deadUrlSet.add(String(it.url));
+    } catch (e) { /* 数据文件缺失/格式异常时按无失效处理 */ }
+  }
+  return _deadUrlSet;
+}
+
 /* ---------- {% dl %} ---------- */
 /* 链接用 base64 存进 data-url，前端点击后才解码显示，避免爬虫/采集直接抓走明文链接 */
 hexo.extend.tag.register('dl', function (args) {
@@ -91,9 +107,12 @@ hexo.extend.tag.register('dl', function (args) {
   // 把提取码提取出来挂到容器上，展开链接后仍能一键复制
   const codeM = note ? String(note).match(/提取码\s*[:：]\s*([A-Za-z0-9]{2,16})/) : null;
   const codeAttr = codeM ? ` data-code="${esc(codeM[1])}"` : '';
-  return `<div class="hb-dl" data-url="${b64}"${codeAttr}>`
+  // 该链接是否在巡检失效清单里 → 打「已失效」徽标
+  const isDead = deadUrlSet().has(String(url));
+  const deadBadge = isDead ? '<span class="hb-dead-badge" title="链接可能已失效，等待补链">已失效</span>' : '';
+  return `<div class="hb-dl${isDead ? ' hb-dead' : ''}" data-url="${b64}"${codeAttr}>`
     + `<span class="hb-dl-ico">${ICON_DL}</span>`
-    + `<span class="hb-dl-main"><b>${esc(name)}</b>${noteHTML(note)}</span>`
+    + `<span class="hb-dl-main"><b>${esc(name)}</b>${deadBadge}${noteHTML(note)}</span>`
     + `<button class="hb-dl-show" type="button">显示链接</button>`
     + `<span class="hb-dl-arrow">${ICON_ARROW}</span>`
     + '</div>';
@@ -106,6 +125,25 @@ hexo.extend.tag.register('dlbox', function (args, content) {
   const head = title ? `<div class="hb-dlbox-hd">${esc(title)}</div>` : '';
   return `<div class="hb-dlbox">${head}${content}</div>`;
 }, { ends: true });
+
+/* ---------- {% deadlinks %} —— 失效链接警示块 ---------- */
+/* 数据源 source/_data/deadlinks.yml（由 工具/巡检链接.py 生成）。
+   有失效 → 红色警示列表；无失效 → 绿色「全部正常」提示。放在补链页顶部。 */
+hexo.extend.tag.register('deadlinks', function () {
+  const data = hexo.locals.get('data') || {};
+  const d = data.deadlinks || {};
+  const arr = Array.isArray(d.dead) ? d.dead : [];
+  const checked = d.checked || '';
+  if (!arr.length) {
+    return `<div class="hb-deadlist hb-deadlist-ok">✓ 最近巡检${checked ? '（' + esc(checked) + '）' : ''}：所有下载链接正常，暂无失效。</div>`;
+  }
+  const rows = arr.map(it =>
+    `<li><b>${esc(it.title || '未归类')}</b> · <code>${esc(it.url || '')}</code><br><i>${esc(it.reason || '疑似失效')}</i></li>`
+  ).join('');
+  return `<div class="hb-deadlist hb-deadlist-bad">`
+    + `<div class="hb-deadlist-hd">⚠ 以下下载链接已失效，等待补链${checked ? '（巡检于 ' + esc(checked) + '）' : ''}</div>`
+    + `<ul>${rows}</ul></div>`;
+});
 
 /* ---------- {% tip %} ... {% endtip %} ---------- */
 /* tag 的 content 是原始 markdown，必须手动渲染一遍，
