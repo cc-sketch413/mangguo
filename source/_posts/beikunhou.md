@@ -61,8 +61,18 @@ work_episodes: 15 已发布
 {% dl 百度网盘 || https://pan.baidu.com/s/1OqEZFD0iZxlVY0bidOFk9g || 提取码：5qeq %}
 {% enddlbox %}
 
+{% dlbox 无码版 %}
+{% dl UC || https://drive.uc.cn/s/a468307e9cf54 || 提取码：Xapc %}
+{% dl 百度网盘 || https://pan.baidu.com/s/1PTuHl9MrdsJ30CFy_ywoRg || 提取码：fwqg %}
+{% enddlbox %}
+
+{% tip info %}
+无码版为 PDF 格式，打开 PDF 的密码与解压密码相同：{% copy mangguo %}（点一下复制）。
+{% endtip %}
+
 ## 更新记录
 
+- 2026-10-26 新增无码版下载
 - 2026-10-25 15更新
 - 2026-09-18 作品页上线
 
