@@ -9,10 +9,10 @@ cover: /img/cover/yongshi-chuanqi.jpg
 description: 勇者传说
 work_status: ongoing        # ongoing 连载中 / completed 已完结 / hiatus 暂停 / planned 预告
 work_original: 용사 이야기 (HERO STORY)
-work_episodes: 外传8 已发布
+work_episodes: 外传10 已发布
 ---
 
-{% workhead 漫画 || 连载中 || 언니 || 外传8 已发布 || RIDI | https://ridibooks.com/books/6014000043 %}
+{% workhead 漫画 || 连载中 || 언니 || 外传10 已发布 || RIDI | https://ridibooks.com/books/6014000043 %}
 
 ## 作品简介
 
@@ -43,14 +43,14 @@ work_episodes: 外传8 已发布
 
 ## 下载
 
-{% dlbox 最新话（外传8） %}
-{% dl UC || https://drive.uc.cn/s/1e2427477bd44 || 提取码：8eFM %}
-{% dl 百度网盘 || https://pan.baidu.com/s/1Qh1jJlB5tHhmr8jpSSXpZg || 提取码：dix4 %}
+{% dlbox 最新话（外传10） %}
+{% dl UC || https://drive.uc.cn/s/fa8b3e2f210d4 || 提取码：6MQz %}
+{% dl 百度网盘 || https://pan.baidu.com/s/14TmD7ZuF8zN_Yy7KlFWDFg || 提取码：anas %}
 {% enddlbox %}
 
 ## 更新记录
 
-- 2026-09-30 外传8更新
+- 2026-10-28 外传10更新
 - 2026-09-17 作品页上线
 
 <!--
