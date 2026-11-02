@@ -57,7 +57,7 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add source/_data/deadlinks.yml
           git commit -m "巡检：更新失效链接清单" || echo "无内容可提交"
-          git push "https://x-access-token:${{ secrets.PAT }}@github.com/${{ github.repository }}.git" HEAD:refs/heads/master
+          git push "https://x-access-token:${{ secrets.PAT }}@github.com/${{ github.repository }}.git" HEAD:refs/heads/master || echo "推送被拒绝：可能 master 有分支保护（需走 PR）或 PAT 无写权限；站内失效标注将在你下次手动发布时生效"
 
       - name: 发失效通知（建/更新 Issue）
         if: env.HAS_DEAD == 'yes'
