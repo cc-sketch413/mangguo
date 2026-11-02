@@ -1,0 +1,78 @@
+name: 链接失效巡检
+
+# 每天自动巡检所有网盘下载链接，发现失效就：
+#   1. 更新 source/_data/deadlinks.yml（站点据此给失效下载项打「已失效」标注）
+#   2. 建 GitHub Issue 通知（GitHub 会发邮件到你的注册邮箱）
+#
+# 说明：
+#   * 「补链」本身无法自动化 —— 网盘不提供程序化生成分享链接的接口，
+#     必须由你在网盘里手动重新生成分享，再把新链接填回站点。
+#   * 巡检只负责「发现失效 + 通知 + 站内标注」，补链仍需人工。
+#   * 站内标注要自动上线需要 PAT（见下方 secrets.PAT），
+#     没配 PAT 则只发 Issue 通知、标注待你下次手动发布时生效。
+
+on:
+  schedule:
+    # 每天 10:30（北京时间）→ UTC 02:30
+    - cron: '30 2 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 拉取源码
+        uses: actions/checkout@v4
+
+      - name: 巡检所有下载链接
+        run: |
+          python3 工具/巡检链接.py --no-sleep > 工具/_巡检报告.txt || true
+
+      - name: 展示报告
+        run: cat 工具/_巡检报告.txt
+
+      - name: 判定是否需要更新与通知
+        shell: bash
+        run: |
+          if git diff --quiet -- source/_data/deadlinks.yml; then
+            echo "CHANGED=no" >> "$GITHUB_ENV"
+          else
+            echo "CHANGED=yes" >> "$GITHUB_ENV"
+          fi
+          if grep -q "失效链接" 工具/_巡检报告.txt; then
+            echo "HAS_DEAD=yes" >> "$GITHUB_ENV"
+          else
+            echo "HAS_DEAD=no" >> "$GITHUB_ENV"
+          fi
+          echo "CHANGED=$CHANGED HAS_DEAD=$HAS_DEAD"
+
+      - name: 提交站内标注（触发重新部署）
+        if: env.CHANGED == 'yes' && ${{ secrets.PAT != '' }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add source/_data/deadlinks.yml
+          git commit -m "巡检：更新失效链接清单" || echo "无内容可提交"
+          git push "https://x-access-token:${{ secrets.PAT }}@github.com/${{ github.repository }}.git" master
+
+      - name: 发失效通知（建/更新 Issue）
+        if: env.HAS_DEAD == 'yes'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const report = fs.readFileSync('工具/_巡检报告.txt', 'utf8');
+            const title = '🔗 下载链接失效巡检';
+            const body = '以下链接被自动巡检判定为失效，请补链后重新跑一次巡检（或手动发布）。\n\n```\n' + report + '\n```\n\n> 补链方法：到网盘重新生成分享链接 → 更新对应作品页/补链页的 `{% dl %}` 标签 → 提交发布。补好后巡检会自动清空本清单。';
+            const { owner, repo } = context.repo;
+            const { data: issues } = await github.rest.issues.listForRepo({ owner, repo, state: 'open', per_page: 100 });
+            const existing = issues.find(i => i.title === title);
+            if (existing) {
+              await github.rest.issues.createComment({ owner, repo, issue_number: existing.number, body: '更新于 ' + new Date().toISOString() + '\n\n' + body });
+            } else {
+              await github.rest.issues.create({ owner, repo, title, body });
+            }

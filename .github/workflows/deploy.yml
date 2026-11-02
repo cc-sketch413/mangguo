@@ -1,0 +1,95 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [master]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 拉取源码
+        uses: actions/checkout@v4
+
+      - name: 还原文件修改时间（决定「最近更新」排序）
+        run: |
+          # ★ Git 不保留文件的 mtime：checkout 后所有文件都变成同一时刻，
+          #   而且同一次 commit 里的多个文件时间完全相同 ——「最近更新」会排不出先后。
+          #   这里按随源码一起提交的快照把 mtime 还原（快照由本地构建时自动记录）。
+          python 工具/mtime_sync.py --restore
+          echo "--- 还原后的作品修改时间 ---"
+          ls -la --time-style=+%Y-%m-%d_%H:%M source/_posts/
+
+      - name: 安装 Node 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+
+      - name: 安装依赖
+        run: npm ci || npm install
+
+      - name: 检查 GitHub Pages 是否已启用
+        run: |
+          # 首次部署前必须人工开启一次 Pages：创建 Pages 站点属于「仓库管理操作」，
+          # 自动令牌(GITHUB_TOKEN)按设计没有这个权限，所以无法自动化。
+          if ! curl -sf -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+                "https://api.github.com/repos/${{ github.repository }}/pages" > /dev/null; then
+            echo "::error title=GitHub Pages 还没启用::请打开 https://github.com/${{ github.repository }}/settings/pages ，把「Build and deployment」的 Source 选成「GitHub Actions」，保存后回到 Actions 页重新运行本工作流。"
+            exit 1
+          fi
+          echo "Pages 已启用 ✓"
+
+      - name: 适配 GitHub Pages 子路径
+        run: |
+          # 用户名 / 仓库名从 Actions 上下文自动获取，换仓库、换人用都不用改任何文件
+          OWNER="${GITHUB_REPOSITORY%%/*}"
+          REPO="${GITHUB_REPOSITORY##*/}"
+          sed -i "s|^url:.*|url: https://${OWNER}.github.io|" _config.yml
+          sed -i "s|^root:.*|root: /${REPO}/|" _config.yml
+          echo "--- 构建配置 ---"
+          grep -E '^(url|root):' _config.yml
+
+      - name: 构建站点
+        run: npm run build
+
+      - name: 修补漏网的绝对路径（inject、菜单、正文链接）
+        run: python 工具/适配子路径.py
+
+      - name: 抽查修补结果
+        run: |
+          REPO="${GITHUB_REPOSITORY##*/}"
+          echo "--- 应该带 /${REPO}/ 前缀的路径 ---"
+          grep -oE "(href|src)=\"/${REPO}/(css|js)/[^\"]*\"" public/index.html | head -5
+          echo "--- 不应该再出现裸的根路径引用 ---"
+          if grep -qE '(href|src)="/(css|js|img|guide|library)/' public/index.html; then
+            echo "!! 仍有漏网路径"; grep -oE '(href|src)="/[^"]*"' public/index.html | head -10; exit 1
+          else
+            echo "OK 未发现漏网路径"
+          fi
+
+      - name: 上传产物
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./public
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: 发布到 GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

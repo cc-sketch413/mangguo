@@ -1,0 +1,340 @@
+/* ============================================================
+   scripts/tags.js —— 自定义标签插件
+   ------------------------------------------------------------
+   在文章里可以直接用这些标签，不用写 HTML：
+
+     {% dl 百度网盘 || https://pan.baidu.com/s/xxx || 提取码：bread %}
+     {% dlbox 漫画总链接 %} ... 多个 {% dl %} ... {% enddlbox %}
+     {% tip warn %} 提示内容 {% endtip %}
+     {% worklist %}                            列出全部作品
+     {% worklist 漫画 || 8 %}                   只要漫画，最多 8 个
+     {% worklist 全部 || 999 || completed %}     全部已完结作品（第三位是状态筛选）
+     {% novels %}                              小说下载区（数据源 source/_data/novels.yml）
+     {% progress 2 || 12 %}      进度条 2/12
+     {% workhead 类型 || 状态 || 原作者 || 进度 %}
+
+   参数用 || 分隔（不用引号，避免空格问题）
+   ------------------------------------------------------------
+   注意：本文件运行在 Hexo 的 scripts 沙箱里，`hexo` 是现成的
+   全局变量，直接调用即可，不要用 module.exports 包裹。
+   ============================================================ */
+'use strict';
+
+const crypto = require('crypto');
+function sha256Hex(s) {
+  return crypto.createHash('sha256').update(String(s == null ? '' : s), 'utf8').digest('hex');
+}
+
+/* 把参数统一解析成数组。Hexo 可能已经把参数拆好，也可能没有 */
+function parseArgs(raw) {
+  const s = Array.isArray(raw) ? raw.join(' ') : String(raw == null ? '' : raw);
+  return s.split('||').map(x => x.trim()).filter(x => x !== '');
+}
+
+const esc = s => String(s == null ? '' : s)
+  .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+  .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+
+const ICON_DL = '<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11m0 0 4-4m-4 4-4-4M5 19h14"/></svg>';
+const ICON_ARROW = '<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>';
+const ICON_COPY = '<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>';
+
+/* ---------- 封面：没有图就用标题 hash 生成渐变封面 ---------- */
+const PALETTES = [
+  ['#f59e0b', '#d97706'], ['#f0783a', '#c8561f'], ['#f6b733', '#e08c0d'],
+  ['#e06b7a', '#b04a5f'], ['#7b8ede', '#4a5bb5'], ['#c98fd4', '#9159a3'],
+  ['#6fb1a0', '#3a7f70'], ['#8fbf6a', '#5d8f3f'], ['#e8a0b0', '#c06b84'],
+  ['#a98fd4', '#7059a3']
+];
+function hash(str) {
+  let h = 0;
+  for (let i = 0; i < str.length; i++) { h = (h << 5) - h + str.charCodeAt(i); h |= 0; }
+  return Math.abs(h);
+}
+function coverHTML(post) {
+  const img = post.cover || post.top_img;
+  if (img) return `<img src="${esc(img)}" alt="${esc(post.title)}" loading="lazy">`;
+  const p = PALETTES[hash(String(post.slug || post.title)) % PALETTES.length];
+  return `<div class="hb-cover-gen" style="background:linear-gradient(150deg,${p[0]},${p[1]})"><span>${esc(post.title)}</span></div>`;
+}
+
+/* ---------- 状态文案 ---------- */
+const STATUS = {
+  ongoing: '连载中', completed: '已完结',
+  hiatus: '暂停中', planned: '预告'
+};
+
+/* ---------- 备注 → 提取码一键复制 ---------- */
+/* 备注形如「提取码：abcd」时，把码本身渲染成可点击复制的按钮；
+   其他备注（如「无需提取码」）原样显示 */
+function noteHTML(note) {
+  if (!note) return '';
+  const m = String(note).match(/^(.*?提取码\s*[:：]\s*)([A-Za-z0-9]{2,16})(.*)$/);
+  if (!m) return `<i class="hb-dl-note">${esc(note)}</i>`;
+  const pre = m[1], code = m[2], post = m[3];
+  return `<i class="hb-dl-note">${esc(pre)}`
+    + `<button class="hb-dl-code" type="button" data-code="${esc(code)}" title="点击复制提取码">`
+    + `<span>${esc(code)}</span>${ICON_COPY}</button>`
+    + (post ? esc(post) : '')
+    + '</i>';
+}
+
+/* ---------- 失效链接清单（数据源 source/_data/deadlinks.yml） ---------- */
+/* 由 工具/巡检链接.py 生成；渲染期只读一次，缓存在模块级变量里 */
+let _deadUrlSet = null;
+function deadUrlSet() {
+  if (_deadUrlSet === null) {
+    _deadUrlSet = new Set();
+    try {
+      const data = hexo.locals.get('data') || {};
+      const d = data.deadlinks || {};
+      const arr = Array.isArray(d.dead) ? d.dead : [];
+      for (const it of arr) if (it && it.url) _deadUrlSet.add(String(it.url));
+    } catch (e) { /* 数据文件缺失/格式异常时按无失效处理 */ }
+  }
+  return _deadUrlSet;
+}
+
+/* ---------- {% dl %} ---------- */
+/* 链接用 base64 存进 data-url，前端点击后才解码显示，避免爬虫/采集直接抓走明文链接 */
+hexo.extend.tag.register('dl', function (args) {
+  const a = parseArgs(args);
+  const name = a[0], url = a[1], note = a[2];
+  if (!name || !url) {
+    return '<p style="color:#e6a23c">⚠ dl 标签参数不足，正确写法：<code>{% dl 名称 || 链接 || 备注 %}</code></p>';
+  }
+  const b64 = Buffer.from(url, 'utf8').toString('base64');
+  // 把提取码提取出来挂到容器上，展开链接后仍能一键复制
+  const codeM = note ? String(note).match(/提取码\s*[:：]\s*([A-Za-z0-9]{2,16})/) : null;
+  const codeAttr = codeM ? ` data-code="${esc(codeM[1])}"` : '';
+  // 该链接是否在巡检失效清单里 → 打「已失效」徽标
+  const isDead = deadUrlSet().has(String(url));
+  const deadBadge = isDead ? '<span class="hb-dead-badge" title="链接可能已失效，等待补链">已失效</span>' : '';
+  return `<div class="hb-dl${isDead ? ' hb-dead' : ''}" data-url="${b64}"${codeAttr}>`
+    + `<span class="hb-dl-ico">${ICON_DL}</span>`
+    + `<span class="hb-dl-main"><b>${esc(name)}</b>${deadBadge}${noteHTML(note)}</span>`
+    + `<button class="hb-dl-show" type="button">显示链接</button>`
+    + `<span class="hb-dl-arrow">${ICON_ARROW}</span>`
+    + '</div>';
+});
+
+/* ---------- {% dlbox 标题 %} ... {% enddlbox %} ---------- */
+hexo.extend.tag.register('dlbox', function (args, content) {
+  const a = parseArgs(args);
+  const title = a[0];
+  const head = title ? `<div class="hb-dlbox-hd">${esc(title)}</div>` : '';
+  return `<div class="hb-dlbox">${head}${content}</div>`;
+}, { ends: true });
+
+/* ---------- {% deadlinks %} —— 失效链接警示块 ---------- */
+/* 数据源 source/_data/deadlinks.yml（由 工具/巡检链接.py 生成）。
+   有失效 → 红色警示列表；无失效 → 绿色「全部正常」提示。放在补链页顶部。 */
+hexo.extend.tag.register('deadlinks', function () {
+  const data = hexo.locals.get('data') || {};
+  const d = data.deadlinks || {};
+  const arr = Array.isArray(d.dead) ? d.dead : [];
+  const checked = d.checked || '';
+  if (!arr.length) {
+    return `<div class="hb-deadlist hb-deadlist-ok">✓ 最近巡检${checked ? '（' + esc(checked) + '）' : ''}：所有下载链接正常，暂无失效。</div>`;
+  }
+  const rows = arr.map(it =>
+    `<li><b>${esc(it.title || '未归类')}</b> · <code>${esc(it.url || '')}</code><br><i>${esc(it.reason || '疑似失效')}</i></li>`
+  ).join('');
+  return `<div class="hb-deadlist hb-deadlist-bad">`
+    + `<div class="hb-deadlist-hd">⚠ 以下下载链接已失效，等待补链${checked ? '（巡检于 ' + esc(checked) + '）' : ''}</div>`
+    + `<ul>${rows}</ul></div>`;
+});
+
+/* ---------- {% tip %} ... {% endtip %} ---------- */
+/* tag 的 content 是原始 markdown，必须手动渲染一遍，
+   否则 `**加粗**`、`[链接](url)` 会原样显示成星号和方括号。
+   （custom.css 里已备好 .hb-tip p 的首尾边距，配合渲染出的 <p>） */
+hexo.extend.tag.register('tip', function (args, content) {
+  const a = parseArgs(args);
+  const kind = a[0] || 'info';
+  const html = hexo.render.renderSync({ text: content, engine: 'markdown' });
+  return `<div class="hb-tip hb-tip-${esc(kind)}">${html}</div>`;
+}, { ends: true });
+
+/* ---------- {% copy 值 || 显示文本 %} ----------
+   任意内容一键复制（解压密码、账号、命令等）。
+   例：{% copy mangguo %}            → 按钮显示 mangguo
+       {% copy hxfabuzhan || 密码 %} → 按钮显示「密码」，复制的是 hxfabuzhan */
+hexo.extend.tag.register('copy', function (args) {
+  const a = parseArgs(args);
+  const val = a[0];
+  if (!val) return '<span style="color:#e6a23c">⚠ copy 标签需要内容：<code>{% copy 要复制的内容 %}</code></span>';
+  const label = a[1] || val;
+  return `<button class="hb-copy" type="button" data-code="${esc(val)}" title="点击复制">`
+    + `<span>${esc(label)}</span>${ICON_COPY}</button>`;
+});
+
+/* ---------- {% progress 已发布 || 总话数 %} ---------- */
+hexo.extend.tag.register('progress', function (args) {
+  const a = parseArgs(args);
+  const done = Number(a[0]) || 0;
+  const total = Number(a[1]) || 0;
+  const pct = total ? Math.min(100, Math.round(done / total * 100)) : 0;
+  return `<div class="hb-progress"><div class="hb-progress-bar" style="width:${pct}%"></div>`
+    + `<span class="hb-progress-txt">已发布 <b>${done}</b> / ${total || '?'}</span></div>`;
+});
+
+/* ---------- {% worklist 分类 || 数量 || 状态 %} ---------- */
+/* 分类写「全部」或留空 = 不限分类；
+   第三位可选状态筛选：ongoing 连载中 / completed 已完结 / hiatus 暂停 / planned 预告 */
+hexo.extend.tag.register('worklist', function (args) {
+  const a = parseArgs(args);
+  const rawCat = a[0] || '';
+  const wantCat = rawCat === '全部' ? '' : rawCat;
+  const limit = Number(a[1]) || 999;
+  const wantStatus = a[2] || '';
+
+  const posts = hexo.locals.get('posts');
+  if (!posts || !posts.length) {
+    return '<p style="color:#93a3af">（还没有作品）</p>';
+  }
+
+  // ⚠ 关键：hexo.locals.get('posts') 是 warehouse 的 _Query 对象。
+  //   _Query.filter() 返回的仍然是 _Query（不是数组），而 _Query.sort(orderby, order)
+  //   要的是「字段名 + 方向」，跟数组的 sort(比较函数) 完全不是一回事 ——
+  //   直接传比较函数会被静默忽略，导致「按最近更新排序」失效、顺序恒等于原始顺序。
+  //   必须先 toArray() 变成真数组，才能用标准数组的 filter / sort。
+  let list = posts.toArray().filter(p => {
+    if (p.categories && p.categories.length) {
+      const names = p.categories.toArray().map(c => c.name);
+      if (names.indexOf('公告') >= 0) return false;   // 公告不算作品
+      if (wantCat && names.indexOf(wantCat) < 0) return false;
+    } else {
+      if (wantCat) return false;
+    }
+    if (wantStatus && (p.work_status || 'ongoing') !== wantStatus) return false;
+    return true;
+  });
+
+  list = list.sort((x, y) => (y.updated || y.date) - (x.updated || x.date)).slice(0, limit);
+
+  if (!list.length) {
+    if (wantStatus === 'completed') return '<p style="color:#93a3af">还没有完结的作品，完结后会归档到这里。</p>';
+    return `<p style="color:#93a3af">（没有找到${wantCat ? '「' + esc(wantCat) + '」分类下的' : ''}作品）</p>`;
+  }
+
+  return '<div class="hb-work-grid">' + list.map(p => {
+    const names = p.categories && p.categories.length ? p.categories.toArray().map(c => c.name) : [];
+    const type = names.indexOf('漫画') >= 0 ? '漫画' : (names.indexOf('小说') >= 0 ? '小说' : '作品');
+    const status = STATUS[p.work_status] || '';
+    const tags = p.tags && p.tags.length ? p.tags.toArray().filter(t => !STATUS[t.name]).slice(0, 3) : [];
+    const d = p.updated || p.date;
+    const dateStr = d ? `${d.year()}/${String(d.month() + 1).padStart(2, '0')}/${String(d.date()).padStart(2, '0')}` : '';
+
+    return `<a class="hb-work-card" href="${p.path ? '/' + p.path : p.permalink}">`
+      + `<span class="hb-work-cover">${coverHTML(p)}`
+      + `<span class="hb-badge hb-badge-${type === '漫画' ? 'manga' : 'novel'}">${type}</span>`
+      + (status ? `<span class="hb-badge-status hb-st-${esc(p.work_status || '')}">${status}</span>` : '')
+      + '</span>'
+      + `<span class="hb-work-body"><b>${esc(p.title)}</b>`
+      + (p.work_original ? `<i>${esc(p.work_original)}</i>` : '')
+      + (tags.length ? `<span class="hb-work-tags">${tags.map(t => `<em>${esc(t.name)}</em>`).join('')}</span>` : '')
+      + `<span class="hb-work-foot"><span>${esc(p.work_episodes || '')}</span><span>${dateStr}</span></span>`
+      + '</span></a>';
+  }).join('') + '</div>';
+});
+
+/* ---------- {% workhead %} —— 作品页顶部的信息条 ---------- */
+/* 官网参数（可省略）写法：`https://xxx` 或 `RIDI | https://xxx`
+   —— 只写链接时，按钮文字自动取域名。留空则整项不显示。 */
+function officialHTML(raw) {
+  const s = String(raw == null ? '' : raw).trim();
+  if (!s) return '';
+  let name = '', url = s;
+  const i = s.indexOf('|');
+  if (i >= 0) { name = s.slice(0, i).trim(); url = s.slice(i + 1).trim(); }
+  if (!url) return '';
+  if (!/^https?:\/\//i.test(url)) url = 'https://' + url;
+  if (!name) {
+    const m = url.match(/^https?:\/\/([^/?#]+)/i);
+    name = m ? m[1].replace(/^www\./, '') : '官网';
+  }
+  return `<span class="hb-wh-item"><label>官网</label><b>`
+    + `<a class="hb-wh-link" href="${esc(url)}" target="_blank" rel="noopener noreferrer">${esc(name)}</a>`
+    + `</b></span>`;
+}
+
+hexo.extend.tag.register('workhead', function (args) {
+  const a = parseArgs(args);
+  // {% workhead 类型 || 状态 || 原作者 || 进度 || 官网 %}
+  const type = a[0], status = a[1], author = a[2], prog = a[3];
+  const stCls = Object.keys(STATUS).find(k => STATUS[k] === status) || 'ongoing';
+  return `<div class="hb-workhead">`
+    + `<span class="hb-wh-item"><label>类型</label><b>${esc(type || '—')}</b></span>`
+    + `<span class="hb-wh-item"><label>状态</label><b class="hb-st-${esc(stCls)}">${esc(status || '—')}</b></span>`
+    + `<span class="hb-wh-item"><label>原作者</label><b>${esc(author || '—')}</b></span>`
+    + `<span class="hb-wh-item"><label>汉化进度</label><b>${esc(prog || '—')}</b></span>`
+    + officialHTML(a[4])
+    + '</div>';
+});
+
+/* ---------- {% novels %} —— 小说下载区（输密码后直接下载文件） ----------
+   数据源：source/_data/novels.yml
+   - 每本小说一个独立密码（互不相同），由站主自己设置。
+   - 密码写法（推荐直接写明文，不用跑任何脚本）：
+       ① password: 我的密码       直接写明文，构建时自动转成哈希（最简单，推荐）
+       ② password_hash: "xxxx"   存 SHA-256 哈希（进阶，明文不进 novels.yml）
+   - 安全性定位：**只是「门帘」**。纯静态站没有后端，文件本身仍是可直链访问的，
+     懂技术的人若知道路径可以直接下载。要真正保护，请把 zip 本身也加压缩密码
+     （zip 密码 = 本本密码），这样就算文件被直链下载，没密码也解不开。
+*/
+hexo.extend.tag.register('novels', function () {
+  const data = hexo.locals.get('data') || {};
+  const conf = data.novels || {};
+  const list = Array.isArray(conf.novels) ? conf.novels : [];
+
+  if (!list.length) {
+    return '<p class="hb-novel-empty">小说区还在准备中，敬请期待。</p>';
+  }
+
+  return '<div class="hb-novel-grid">' + list.map(n => {
+    const hash = String(n.password_hash || (n.password ? sha256Hex(n.password) : ''));
+    const files = (Array.isArray(n.files) ? n.files : []).filter(f => f && f.path);
+    // 文件路径统一规整：反斜杠→正斜杠、确保以 / 开头（绝对路径），
+    // 再用 encodeURI 编码空格/中文等，避免子路径部署或含空格文件名时下载 404。
+    const fileURL = p => {
+      let s = String(p == null ? '' : p).replace(/\\/g, '/').trim();
+      if (!s) return '';
+      if (s.charAt(0) !== '/') s = '/' + s;
+      return s;
+    };
+    const fileHTML = files.map(f =>
+      `<a class="hb-novel-file" href="${esc(encodeURI(fileURL(f.path)))}" download>`
+      + `<span class="hb-nf-ico">${ICON_DL}</span>`
+      + `<span class="hb-nf-main"><b>${esc(f.name || '下载')}</b>`
+      + (f.size ? `<i>${esc(f.size)}</i>` : '')
+      + '</span>'
+      + `<span class="hb-nf-arrow">${ICON_ARROW}</span>`
+      + '</a>'
+    ).join('');
+
+    const meta = [];
+    if (n.author) meta.push(esc(n.author));
+    if (n.status) meta.push(esc(n.status));
+
+    return `<div class="hb-novel" data-hash="${esc(hash)}">`
+      + `<span class="hb-novel-cover">${coverHTML(n)}</span>`
+      + `<div class="hb-novel-body">`
+      + `<b class="hb-novel-title">${esc(n.title || '未命名')}</b>`
+      + (n.original ? `<i class="hb-novel-original">${esc(n.original)}</i>` : '')
+      + (meta.length ? `<span class="hb-novel-tags">${meta.map(m => `<em>${m}</em>`).join('')}</span>` : '')
+      + (n.intro ? `<p class="hb-novel-intro">${esc(String(n.intro).trim()).replace(/\n+/g, '<br>')}</p>` : '')
+      + '<div class="hb-novel-lock">'
+      + '<div class="hb-novel-lock-row">'
+      + '<input type="password" class="hb-novel-pw" placeholder="输入下载密码" autocomplete="off" spellcheck="false">'
+      + '<button type="button" class="hb-novel-btn">解锁下载</button>'
+      + '</div>'
+      + '<span class="hb-novel-msg"></span>'
+      + '</div>'
+      + `<div class="hb-novel-files" hidden>${fileHTML || '<span class="hb-novel-msg">（这本书还没放文件）</span>'}</div>`
+      + '</div></div>';
+  }).join('') + '</div>';
+});
+
+/* 注：18+ 年龄确认门已改为「全站注入」，见 scripts/agegate-inject.js
+   （原来这里是 {% agegate %} 标签，只能拦写了标签的页面，会漏掉其他入口） */
