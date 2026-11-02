@@ -1,0 +1,1 @@
+修复 check-links 工作流：CI 分离 HEAD 下 git push master 失败，改为 HEAD:refs/heads/master
