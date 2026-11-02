@@ -64,15 +64,20 @@ jobs:
         uses: actions/github-script@v7
         with:
           script: |
-            const fs = require('fs');
-            const report = fs.readFileSync('工具/_巡检报告.txt', 'utf8');
-            const title = '🔗 下载链接失效巡检';
-            const body = '以下链接被自动巡检判定为失效，请补链后重新跑一次巡检（或手动发布）。\n\n```\n' + report + '\n```\n\n> 补链方法：到网盘重新生成分享链接 → 更新对应作品页/补链页的 `{% dl %}` 标签 → 提交发布。补好后巡检会自动清空本清单。';
-            const { owner, repo } = context.repo;
-            const { data: issues } = await github.rest.issues.listForRepo({ owner, repo, state: 'open', per_page: 100 });
-            const existing = issues.find(i => i.title === title);
-            if (existing) {
-              await github.rest.issues.createComment({ owner, repo, issue_number: existing.number, body: '更新于 ' + new Date().toISOString() + '\n\n' + body });
-            } else {
-              await github.rest.issues.create({ owner, repo, title, body });
+            try {
+              const fs = require('fs');
+              const report = fs.readFileSync('工具/_巡检报告.txt', 'utf8');
+              const title = '🔗 下载链接失效巡检';
+              const body = '以下链接被自动巡检判定为失效，请补链后重新跑一次巡检（或手动发布）。\n\n```\n' + report + '\n```\n\n> 补链方法：到网盘重新生成分享链接 → 更新对应作品页/补链页的 `{% dl %}` 标签 → 提交发布。补好后巡检会自动清空本清单。';
+              const { owner, repo } = context.repo;
+              const { data: issues } = await github.rest.issues.listForRepo({ owner, repo, state: 'open', per_page: 100 });
+              const existing = issues.find(i => i.title === title);
+              if (existing) {
+                await github.rest.issues.createComment({ owner, repo, issue_number: existing.number, body: '更新于 ' + new Date().toISOString() + '\n\n' + body });
+              } else {
+                await github.rest.issues.create({ owner, repo, title, body });
+              }
+            } catch (e) {
+              core.error('发失效通知失败：' + (e && e.message));
+              console.log(e && (e.stack || e));
             }
