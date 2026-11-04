@@ -127,6 +127,8 @@ def extract_links():
                 'url': url,
                 'note': note,
                 'file': rel,
+                # 分组键：作品标题 + 文件，用于「同作品多盘互为备用」的自动切换
+                'group': (rel, current_group),
             })
     return links
 
@@ -224,18 +226,41 @@ def run(limit=None, no_write=False, verbose=False, sleep=True):
 
 
 def write_data(results, checked):
-    dead = [{
-        'title': l['title'],
-        'name': l['name'],
-        'url': l['url'],
-        'note': l['note'],
-        'reason': l['reason'] or '疑似失效',
-        'file': l['file'],
-    } for l in results['dead']]
+    # 把所有存活链接按「分组」索引，供失效链接反查「同作品还活着的备用盘」
+    alive_by_group = {}
+    for l in results['alive']:
+        alive_by_group.setdefault(l['group'], []).append(l)
+    for l in results['unknown']:
+        # unknown（网络异常/被反爬）不算可靠存活，但可作「疑似可用」的兜底提示
+        alive_by_group.setdefault(l['group'], []).append(l)
+
+    dead = []
+    for l in results['dead']:
+        # 同作品（同 group）里，除自己外还活着的链接 → 作为「存活备用盘」
+        alts = [a for a in alive_by_group.get(l['group'], []) if a['url'] != l['url']]
+        # 优先推荐明确 alived 的盘，其次 unknown
+        alts.sort(key=lambda a: 0 if a['verdict'] == 'alive' else 1)
+        entry = {
+            'title': l['title'],
+            'name': l['name'],
+            'url': l['url'],
+            'note': l['note'],
+            'reason': l['reason'] or '疑似失效',
+            'file': l['file'],
+        }
+        if alts:
+            entry['alive_alt'] = {
+                'name': alts[0]['name'],
+                'url': alts[0]['url'],
+                'note': alts[0]['note'],
+                'verdict': alts[0]['verdict'],
+            }
+        dead.append(entry)
 
     os.makedirs(os.path.dirname(DATA_FILE), exist_ok=True)
     lines = ['# 自动生成，勿手改 —— 由 工具/巡检链接.py 维护',
              '# 这里列出的链接已在最近一次巡检中被判定为失效，站点会据此给对应下载项打「已失效」标注。',
+             '# 若同作品还有其他盘存活，会一并写入 alive_alt（存活备用盘），站点据此提示「可切换」。',
              '# 补链后重新跑一次巡检，本文件会自动清空/更新。',
              'checked: "%s"' % checked,
              'dead:']
@@ -246,6 +271,13 @@ def write_data(results, checked):
             lines.append('  - title: "%s"' % d['title'].replace('"', "'"))
             lines.append('    url: "%s"' % d['url'])
             lines.append('    reason: "%s"' % d['reason'].replace('"', "'"))
+            alt = d.get('alive_alt')
+            if alt:
+                lines.append('    alive_alt:')
+                lines.append('      name: "%s"' % alt['name'].replace('"', "'"))
+                lines.append('      url: "%s"' % alt['url'])
+                lines.append('      note: "%s"' % alt['note'].replace('"', "'"))
+                lines.append('      verdict: "%s"' % alt['verdict'])
     with open(DATA_FILE, 'w', encoding='utf-8') as f:
         f.write('\n'.join(lines) + '\n')
 

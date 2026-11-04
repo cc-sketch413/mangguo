@@ -96,6 +96,23 @@
       if (dl) expand(dl);
       return;
     }
+    // 失效链接旁的「备用盘」：点击直接展开那个存活备用盘的真实链接
+    var altLink = e.target.closest('.hb-dl-alt-link');
+    if (altLink) {
+      e.preventDefault();
+      var b64 = altLink.getAttribute('data-url') || '';
+      var altUrl = b64decode(b64);
+      if (altUrl) {
+        var altName = altLink.getAttribute('data-name') || '备用盘';
+        var altNote = altLink.getAttribute('data-note') || '';
+        var p = altLink.closest('.hb-dl-alt');
+        if (p) {
+          p.innerHTML = '<a class="hb-dl-go" href="' + escapeHtml(altUrl) + '" target="_blank" rel="noopener nofollow">打开备用盘（' + escapeHtml(altName) + '）</a>'
+            + (altNote ? '<i class="hb-dl-note">' + escapeHtml(altNote) + '</i>' : '');
+        }
+      }
+      return;
+    }
     var copy = e.target.closest('.hb-dl-copy');
     if (copy) {
       copyText(copy.getAttribute('data-url') || '', copy);

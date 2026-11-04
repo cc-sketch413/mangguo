@@ -80,19 +80,33 @@ function noteHTML(note) {
 }
 
 /* ---------- 失效链接清单（数据源 source/_data/deadlinks.yml） ---------- */
-/* 由 工具/巡检链接.py 生成；渲染期只读一次，缓存在模块级变量里 */
+/* 由 工具/巡检链接.py 生成；渲染期只读一次，缓存在模块级变量里。
+   除「失效 url 集合」外，额外维护一张 url → 存活备用盘 的映射，
+   供失效链接渲染时展示「可切换的备用盘」。 */
 let _deadUrlSet = null;
+let _deadAltMap = null;
 function deadUrlSet() {
   if (_deadUrlSet === null) {
     _deadUrlSet = new Set();
+    _deadAltMap = new Map();
     try {
       const data = hexo.locals.get('data') || {};
       const d = data.deadlinks || {};
       const arr = Array.isArray(d.dead) ? d.dead : [];
-      for (const it of arr) if (it && it.url) _deadUrlSet.add(String(it.url));
+      for (const it of arr) {
+        if (!it || !it.url) continue;
+        _deadUrlSet.add(String(it.url));
+        if (it.alive_alt && it.alive_alt.url) {
+          _deadAltMap.set(String(it.url), it.alive_alt);
+        }
+      }
     } catch (e) { /* 数据文件缺失/格式异常时按无失效处理 */ }
   }
   return _deadUrlSet;
+}
+function deadAltMap() {
+  deadUrlSet(); // 确保已初始化
+  return _deadAltMap;
 }
 
 /* ---------- {% dl %} ---------- */
@@ -110,9 +124,22 @@ hexo.extend.tag.register('dl', function (args) {
   // 该链接是否在巡检失效清单里 → 打「已失效」徽标
   const isDead = deadUrlSet().has(String(url));
   const deadBadge = isDead ? '<span class="hb-dead-badge" title="链接可能已失效，等待补链">已失效</span>' : '';
+  // 若失效，且同作品存在还活着的备用盘 → 追加「可切换」提示（带存活备用盘的可点链接）
+  let altHTML = '';
+  if (isDead) {
+    const alt = deadAltMap().get(String(url));
+    if (alt && alt.url) {
+      const altB64 = Buffer.from(alt.url, 'utf8').toString('base64');
+      const altLabel = alt.verdict === 'alive' ? '备用盘可用' : '备用盘待确认';
+      altHTML = `<span class="hb-dl-alt" title="同作品的其他盘仍可用，点击切换">`
+        + `<span class="hb-dl-alt-tag">↻ ${esc(altLabel)}</span>`
+        + `<a class="hb-dl-alt-link" data-url="${altB64}" data-name="${esc(alt.name || '备用盘')}">${esc(alt.name || '备用盘')}</a>`
+        + `</span>`;
+    }
+  }
   return `<div class="hb-dl${isDead ? ' hb-dead' : ''}" data-url="${b64}"${codeAttr}>`
     + `<span class="hb-dl-ico">${ICON_DL}</span>`
-    + `<span class="hb-dl-main"><b>${esc(name)}</b>${deadBadge}${noteHTML(note)}</span>`
+    + `<span class="hb-dl-main"><b>${esc(name)}</b>${deadBadge}${altHTML}${noteHTML(note)}</span>`
     + `<button class="hb-dl-show" type="button">显示链接</button>`
     + `<span class="hb-dl-arrow">${ICON_ARROW}</span>`
     + '</div>';
