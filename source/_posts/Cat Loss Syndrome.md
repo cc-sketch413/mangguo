@@ -31,12 +31,13 @@ work_episodes: 01-02 已发布
 ## 下载
 
 {% dlbox 最新话（01-02） %}
-{% dl UC || https://drive.uc.cn/s/cea28857fbc84 || 提取码：qTFU %}
-{% dl 百度网盘 || https://pan.baidu.com/s/13YOaUF3cgewdOaUd09p4OQ || 提取码：gr4n %}
+{% dl UC || https://drive.uc.cn/s/987631d567b74 || 提取码：YCnE %}
+{% dl 百度网盘 || https://pan.baidu.com/s/1syjq_9UNARX-6IGGazYk_g || 提取码：jd6h %}
 {% enddlbox %}
 
 ## 更新记录
 
+- 2026-11-04 更新漏译部分
 - 2026-11-02 01-02更新
 - 2026-10-30 作品页上线
 
