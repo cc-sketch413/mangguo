@@ -9,10 +9,10 @@ cover: /img/cover/beikunhou.jpg
 description: 被困后，与魔物的那些事
 work_status: ongoing        # ongoing 连载中 / completed 已完结 / hiatus 暂停 / planned 预告
 work_original: 마물들과 던전에 갇혔다
-work_episodes: 15 已发布
+work_episodes: 17 已发布
 ---
 
-{% workhead 漫画 || 连载中 || 콘티메이커，시제트 || 15 已发布 || LEZHIN | https://www.lezhin.com/ko/comic/dungeon_with_monsters %}
+{% workhead 漫画 || 连载中 || 콘티메이커，시제트 || 17 已发布 || LEZHIN | https://www.lezhin.com/ko/comic/dungeon_with_monsters %}
 
 ## 作品简介
 
@@ -56,9 +56,9 @@ work_episodes: 15 已发布
 
 ## 下载
 
-{% dlbox 最新话（15） %}
-{% dl UC || https://drive.uc.cn/s/7c99ac8090de4 || 提取码：Spyq %}
-{% dl 百度网盘 || https://pan.baidu.com/s/1OqEZFD0iZxlVY0bidOFk9g || 提取码：5qeq %}
+{% dlbox 最新话（17） %}
+{% dl UC || https://drive.uc.cn/s/6e20329c3a564 || 提取码：wdZm %}
+{% dl 百度网盘 || https://pan.baidu.com/s/1WtiD-E2C5QNbo7S_Waw3NA || 提取码：eb7p %}
 {% enddlbox %}
 
 {% dlbox 无码版 %}
@@ -72,8 +72,8 @@ work_episodes: 15 已发布
 
 ## 更新记录
 
+- 2026-11-07 17更新
 - 2026-10-26 新增无码版下载
-- 2026-10-25 15更新
 - 2026-09-18 作品页上线
 
 <!--
