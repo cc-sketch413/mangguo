@@ -9,10 +9,10 @@ cover: /img/cover/Cat Loss Syndrome.jpg
 description: Cat Loss Syndrome
 work_status: ongoing        # ongoing 连载中 / completed 已完结 / hiatus 暂停 / planned 预告
 work_original: 마물들과 던전에 갇혔다
-work_episodes: 01-02 已发布
+work_episodes: 03-04 已发布
 ---
 
-{% workhead 漫画 || 连载中 || 오니 || 01-02 已发布 || RIDI | https://ridibooks.com/books/4895004197 %}
+{% workhead 漫画 || 连载中 || 오니 || 03-04 已发布 || RIDI | https://ridibooks.com/books/4895004197 %}
 
 ## 作品简介
 
@@ -30,15 +30,15 @@ work_episodes: 01-02 已发布
 
 ## 下载
 
-{% dlbox 最新话（01-02） %}
-{% dl UC || https://drive.uc.cn/s/987631d567b74 || 提取码：YCnE %}
-{% dl 百度网盘 || https://pan.baidu.com/s/1syjq_9UNARX-6IGGazYk_g || 提取码：jd6h %}
+{% dlbox 最新话（03-04） %}
+{% dl UC || https://drive.uc.cn/s/807b0e48f85a4 || 提取码：RdyD %}
+{% dl 百度网盘 || https://pan.baidu.com/s/1GufD0tNOdXdG3NoYVjq52w || 提取码：qjh5 %}
 {% enddlbox %}
 
 ## 更新记录
 
+- 2026-11-08 03-04更新
 - 2026-11-04 更新漏译部分
-- 2026-11-02 01-02更新
 - 2026-10-30 作品页上线
 
 <!--
