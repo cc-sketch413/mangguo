@@ -9,10 +9,10 @@ cover: /img/cover/Love Drugmh.jpg
 description: Love Drug
 work_status: ongoing        # ongoing 连载中 / completed 已完结 / hiatus 暂停 / planned 预告
 work_original: 러브 드러그(Love Drug)
-work_episodes: 04-05 已发布
+work_episodes: 06-07 已发布
 ---
 
-{% workhead 漫画 || 连载中 || 나우，바디바 || 04-05 已发布 || RIDI | https://ridibooks.com/books/5617000049 %}
+{% workhead 漫画 || 连载中 || 나우，바디바 || 06-07 已发布 || RIDI | https://ridibooks.com/books/5617000049 %}
 
 ## 作品简介
 
@@ -59,14 +59,14 @@ work_episodes: 04-05 已发布
 
 ## 下载
 
-{% dlbox 最新话（04-05） %}
-{% dl UC || https://drive.uc.cn/s/a5c2861a0fff4 || 提取码：PPtF %}
-{% dl 百度网盘 || https://pan.baidu.com/s/1a1IVcOAz7dJ2WX6ztsT2dw || 提取码：t43d %}
+{% dlbox 最新话（06-07） %}
+{% dl UC || https://drive.uc.cn/s/a80552bbabbc4 || 提取码：GRmN %}
+{% dl 百度网盘 || https://pan.baidu.com/s/1TequT8_lMyjbHr2ARLKvSA || 提取码：x5bq %}
 {% enddlbox %}
 
 ## 更新记录
 
-- 2026-10-12 04-05更新
+- 2026-11-17 06-07更新
 - 2026-09-23 作品页上线
 
 <!--
