@@ -12,7 +12,7 @@ work_original: 다할렌의 무녀
 work_episodes: 22话 已发布
 ---
 
-{% workhead 漫画 || 连载中 || 회오리감자 || 22话 已发布 || LEZHIN | https://www.lezhin.com/ko/comic/dahallen %}
+{% workhead 漫画 || 连载中 || 회오리감자 || 23话 已发布 || LEZHIN | https://www.lezhin.com/ko/comic/dahallen %}
 
 ## 作品简介
 
@@ -35,14 +35,14 @@ work_episodes: 22话 已发布
 
 ## 下载
 
-{% dlbox 最新话（22话） %}
-{% dl UC || https://drive.uc.cn/s/637302def3574 || 提取码：v5Dd %}
-{% dl 备份百度 || https://pan.baidu.com/s/1DDnkAF9jLQL5er7NNtljRw || 提取码：b9cx %}
+{% dlbox 最新话（23话） %}
+{% dl UC || https://drive.uc.cn/s/dd870d6a6cf24 || 提取码：hyYp %}
+{% dl 备份百度 || https://pan.baidu.com/s/1yIl0W-9KLosYk2z4QOW4Mg  || 提取码：ieha %}
 {% enddlbox %}
 
 ## 更新记录
 
-- 2026-11-11 22话更新
+- 2026-11-18 23话更新
 - 2026-09-18 作品页上线
 
 <!--
